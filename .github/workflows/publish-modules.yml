@@ -33,13 +33,14 @@ jobs:
           while read folder; do
             if [ -f "$folder/package.json" ]; then
               echo "Processing $folder..."
-              # Bump minor version
-              node -e 'const fs=require("fs");const path=process.argv[1];const pkg=JSON.parse(fs.readFileSync(path));const [major,minor,patch]=pkg.version.split(".").map(Number);pkg.version=`${major}.${minor+1}.0`;fs.writeFileSync(path,JSON.stringify(pkg,null,2));' "$folder/package.json"
-              git config user.name "github-actions"
-              git config user.email "github-actions@github.com"
-              git add "$folder/package.json"
-              git commit -m "ci: bump minor version for $folder"
-              git push
+              PKG_NAME=$(jq -r .name "$folder/package.json")
+              CURRENT_VERSION=$(npm view "$PKG_NAME" version || echo "0.0.0")
+              MAJOR=$(echo $CURRENT_VERSION | cut -d. -f1)
+              MINOR=$(echo $CURRENT_VERSION | cut -d. -f2)
+              NEW_MINOR=$((MINOR+1))
+              NEW_VERSION="$MAJOR.$NEW_MINOR.0"
+              echo "Bumping $PKG_NAME from $CURRENT_VERSION to $NEW_VERSION"
+              jq ".version=\"$NEW_VERSION\"" "$folder/package.json" > "$folder/package.json.tmp" && mv "$folder/package.json.tmp" "$folder/package.json"
               cd $folder
               npm publish --access public
               cd ..
