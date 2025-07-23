@@ -174,7 +174,7 @@
                                 </svg>
                             <% } %>
                         </div>
-                        <span class="text-xs text-discord-white/80 truncate text-center"><%= item.label %></span>
+                            <span class="text-xs text-discord-white/80 truncate text-center"><%= item.label.length > 13 ? item.label.slice(0, 13) + '...' : item.label %></span>
                     </a>
                 <% } %>
             </div>
