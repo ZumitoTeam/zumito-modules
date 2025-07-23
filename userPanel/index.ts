@@ -7,7 +7,7 @@ export class UserPanelModule extends Module {
     constructor(modulePath: string, framework: ZumitoFramework) {
         super(modulePath);
 
-        //ServiceContainer.addService(UserPanelNavigationService, [], true);
+        ServiceContainer.addService(UserPanelNavigationService, [], true);
         ServiceContainer.addService(UserPanelViewService, [], true);
         ServiceContainer.addService(UserPanelAuthService, [], true);
 
