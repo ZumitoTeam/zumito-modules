@@ -161,7 +161,7 @@
             </div>
             
             <!-- Contenido en grid para móvil (separado de desktop) -->
-            <div class="grid grid-cols-4 gap-3 p-4 overflow-y-auto h-full md:hidden">
+            <div class="grid grid-cols-4 gap-3 p-4 overflow-y-auto md:hidden">
                 <% for (const item of navItems) { %>
                     <a href="<%= item.url %>" class="flex flex-col items-center justify-center gap-1">
                         <div class="w-14 h-14 bg-discord-dark-200 rounded-[16px] flex items-center justify-center shadow-md<% if (selectedNavItem && item.url === selectedNavItem.url) { %> bg-discord-primary<% } %>">
