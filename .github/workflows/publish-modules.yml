@@ -34,7 +34,7 @@ jobs:
             if [ -f "$folder/package.json" ]; then
               echo "Processing $folder..."
               # Bump minor version
-              node -e "const fs=require('fs');const path='$folder/package.json';const pkg=JSON.parse(fs.readFileSync(path));const [major,minor,patch]=pkg.version.split('.').map(Number);pkg.version=`${major}.${minor+1}.0`;fs.writeFileSync(path,JSON.stringify(pkg,null,2));"
+              node -e 'const fs=require("fs");const path=process.argv[1];const pkg=JSON.parse(fs.readFileSync(path));const [major,minor,patch]=pkg.version.split(".").map(Number);pkg.version=`${major}.${minor+1}.0`;fs.writeFileSync(path,JSON.stringify(pkg,null,2));' "$folder/package.json"
               git config user.name "github-actions"
               git config user.email "github-actions@github.com"
               git add "$folder/package.json"
