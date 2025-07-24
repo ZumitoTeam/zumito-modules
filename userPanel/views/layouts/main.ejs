@@ -120,7 +120,7 @@
                             </a>
                         </div>
                     <% } %>
-                    <select id="lang-select" class="bg-discord-dark-300 text-white text-sm rounded px-2 py-1">
+                    <select id="lang-select" class="bg-discord-dark-300 text-white text-sm rounded px-2 py-1 h-[45px]">
                         <% for(const l of languages) { %>
                             <option value="<%= l %>" <% if (l === lang) { %>selected<% } %>><%= l.toUpperCase() %></option>
                         <% } %>
@@ -214,7 +214,7 @@
         <aside id="channelList" class="w-60 bg-discord-dark-300 h-screen fixed left-0 md:left-[72px] pt-3 overflow-y-auto pb-20 transform -translate-x-full md:translate-x-0 transition-transform duration-300 z-40">
             <div class="px-3">
                 <div class="flex items-center justify-between p-2 bg-discord-dark-400 rounded-lg hover:bg-discord-dark-200 cursor-pointer transition-colors">
-                    <span class="font-medium text-discord-white truncate"><%= selectedNavItem?.label || 'Panel de Control' %></span>
+                    <span class="font-medium text-discord-white truncate"><%= t(selectedNavItem?.label || 'Panel de Control')  %></span>
                     <svg class="w-4 h-4 flex-shrink-0 text-discord-white/60" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                     </svg>

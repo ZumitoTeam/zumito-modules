@@ -2,6 +2,7 @@ import { Module, ServiceContainer, ZumitoFramework } from "zumito-framework";
 import { UserPanelNavigationService } from "./services/UserPanelNavigationService";
 import { UserPanelViewService } from "./services/UserPanelViewService";
 import { UserPanelAuthService } from "./services/UserPanelAuthService";
+import { UserPanelLanguageManager } from "./services/UserPanelLanguageManager";
 
 export class UserPanelModule extends Module {
     constructor(modulePath: string, framework: ZumitoFramework) {
@@ -10,6 +11,7 @@ export class UserPanelModule extends Module {
         ServiceContainer.addService(UserPanelNavigationService, [], true);
         ServiceContainer.addService(UserPanelViewService, [], true);
         ServiceContainer.addService(UserPanelAuthService, [], true);
+        ServiceContainer.addService(UserPanelLanguageManager, [], true);
 
         this.registerDashboardItem();
     }
@@ -20,7 +22,7 @@ export class UserPanelModule extends Module {
             id: 'back',
             // back arriw icon
             icon: `<svg class="w-6 h-6 text-discord-white/60 group-hover:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>`,
-            label: '$userPanel.nav.back',
+            label: 'userPanel.nav.back',
             url: '/panel',
             order: 1,
             category: 'general',
@@ -28,7 +30,7 @@ export class UserPanelModule extends Module {
         navigationService.registerItem({
             id: 'dashboard',
             icon: `<svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="currentColor"  class="icon icon-tabler icons-tabler-filled icon-tabler-layout-dashboard"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 3a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-4a2 2 0 0 1 -2 -2v-6a2 2 0 0 1 2 -2zm0 12a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-4a2 2 0 0 1 -2 -2v-2a2 2 0 0 1 2 -2zm10 -4a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-4a2 2 0 0 1 -2 -2v-6a2 2 0 0 1 2 -2zm0 -8a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-4a2 2 0 0 1 -2 -2v-2a2 2 0 0 1 2 -2z" /></svg>`,
-            label: '$userPanel.nav.dashboard',
+            label: 'userPanel.nav.dashboard',
             url: '/panel/:guildId(\\d+)',
             order: 2,
             category: 'general',
@@ -36,10 +38,10 @@ export class UserPanelModule extends Module {
                 showDropdown: false,
                 sections: [
                     {
-                        label: '$userPanel.sidebar.general',
+                        label: 'userPanel.sidebar.general',
                         items: [
                             {
-                                label: '$userPanel.nav.dashboard',
+                                label: 'userPanel.nav.dashboard',
                                 url: '/panel/:guildId(\\d+)',
                             },
                         ],
