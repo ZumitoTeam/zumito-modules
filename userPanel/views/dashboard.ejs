@@ -12,14 +12,14 @@
             <p class="text-[#b9bbbe] text-sm mb-6">ID: <%= botId %></p>
             
             <h2 class="text-xl font-semibold text-white mb-4 border-b border-[#40444b] pb-2">
-                Servidores donde eres administrador
+                <%= t('userPanel.servers_admin') %>
             </h2>
             
             <!-- Lista de servidores -->
             <div class="grid gap-3 mb-6">
                 <% if (servers.length === 0) { %>
                     <div class="p-4 bg-[#40444b] rounded-md text-center">
-                        <p class="text-[#b9bbbe]">No eres administrador en ningún servidor donde esté el bot.</p>
+                        <p class="text-[#b9bbbe]"><%= t('userPanel.no_servers') %></p>
                     </div>
                 <% } else { %>
                     <% servers.forEach(server => { %>

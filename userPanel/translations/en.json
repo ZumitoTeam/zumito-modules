@@ -1,0 +1,15 @@
+{
+  "userPanel": {
+    "nav": {
+      "back": "Change server",
+      "dashboard": "Dashboard"
+    },
+    "sidebar": {
+      "general": "General"
+    },
+    "no_servers": "You are not administrator in any server where the bot is present.",
+    "modules": "Modules",
+    "noSection": "No section available",
+    "servers_admin": "Servers where you are administrator"
+  }
+}
