@@ -29,17 +29,17 @@ export class UserPanelNavigationService {
     }
 
     registerSubItems(parentId: string, sectionLabel: string, subItems: NavItem[]) {
-            const parentItem = this.items.find(item => item.id === parentId);
-            if (!parentItem) {
-                throw new Error(`Parent item with id ${parentId} not found`);
-            }
-            let sectionItem = parentItem.sidebar?.sections.find(section => section.label === sectionLabel);
-            if (!sectionItem) {
-                parentItem.sidebar?.sections.push({ label: sectionLabel, items: [] });
-                sectionItem = parentItem.sidebar?.sections.find(section => section.label === sectionLabel);
-            }
-            sectionItem!.items.push(...subItems);
+        const parentItem = this.items.find(item => item.id === parentId);
+        if (!parentItem) {
+            throw new Error(`Parent item with id ${parentId} not found`);
         }
+        let sectionItem = parentItem.sidebar?.sections.find(section => section.label === sectionLabel);
+        if (!sectionItem) {
+            parentItem.sidebar?.sections.push({ label: sectionLabel, items: [] });
+            sectionItem = parentItem.sidebar?.sections.find(section => section.label === sectionLabel);
+        }
+        sectionItem!.items.push(...subItems);
+    }
 
     /**
      * Returns a copy of the navigation items replacing the `:guildId` token

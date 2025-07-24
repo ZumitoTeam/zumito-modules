@@ -42,10 +42,6 @@ export class UserPanelModule extends Module {
                                 label: 'Dashboard',
                                 url: '/panel/:guildId(\\d+)',
                             },
-                            {
-                                label: 'Configuración',
-                                url: '/panel/:guildId/settings',
-                            },
                         ],
                     },
                 ],
