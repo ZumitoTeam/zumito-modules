@@ -28,6 +28,20 @@ export class NavigationService {
         this.items.sort((a, b) => (a.order || 0) - (b.order || 0));
     }
 
+    registerSubItems(parentId: string, subItems: NavItem[]) {
+        const parentItem = this.items.find(item => item.id === parentId);
+        if (!parentItem) {
+            throw new Error(`Parent item with id ${parentId} not found`);
+        }
+        parentItem.sidebar = {
+            showDropdown: true,
+            sections: [{
+                label: parentItem.label,
+                items: subItems,
+            }],
+        };
+    }
+
     getItems(): NavItem[] {
         return this.items;
     }
