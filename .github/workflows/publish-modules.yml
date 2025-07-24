@@ -23,7 +23,7 @@ jobs:
       - name: Get modified root folders
         id: folders
         run: |
-          git diff --name-only ${{ github.event.before }} ${{ github.sha }} | awk -F/ 'NF==2 {print $1}' | sort -u > changed_folders.txt
+          git diff --name-only ${{ github.event.before }} ${{ github.sha }} | awk -F/ '{print $1}' | grep -v '^\.$' | sort -u > changed_folders.txt
           cat changed_folders.txt
 
       - name: Bump minor version and publish
