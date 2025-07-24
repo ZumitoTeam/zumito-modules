@@ -28,6 +28,20 @@ export class UserPanelNavigationService {
         return this.items;
     }
 
+    registerSubItems(parentId: string, subItems: NavItem[]) {
+        const parentItem = this.items.find(item => item.id === parentId);
+        if (!parentItem) {
+            throw new Error(`Parent item with id ${parentId} not found`);
+        }
+        parentItem.sidebar = {
+            showDropdown: true,
+            sections: [{
+                label: parentItem.label,
+                items: subItems,
+            }],
+        };
+    }
+
     /**
      * Returns a copy of the navigation items replacing the `:guildId` token
      * with the provided guild id on every url, including sidebar links.
