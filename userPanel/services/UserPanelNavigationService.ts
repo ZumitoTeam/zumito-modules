@@ -10,13 +10,18 @@ export interface NavItem {
 
 export interface NavSidebar {
     showDropdown: boolean;
-    sections: {
-        label: string;
-        items: {
-            label: string;
-            url: string;
-        }[];
-    }[]
+    sections: SidebarSection[];
+}
+
+export interface SidebarSection {
+    id: string;
+    label: string;
+    items: SidebarItem[];
+}
+
+export interface SidebarItem {
+    label: string;
+    url: string;
 }
 
 export class UserPanelNavigationService {
@@ -28,15 +33,14 @@ export class UserPanelNavigationService {
         return this.items;
     }
 
-    registerSubItems(parentId: string, sectionLabel: string, subItems: NavItem[]) {
+    registerSubItems(parentId: string, sectionId: string, subItems: NavItem[]) {
         const parentItem = this.items.find(item => item.id === parentId);
         if (!parentItem) {
             throw new Error(`Parent item with id ${parentId} not found`);
         }
-        let sectionItem = parentItem.sidebar?.sections.find(section => section.label === sectionLabel);
+        let sectionItem = parentItem.sidebar?.sections.find(section => section.id === sectionId);
         if (!sectionItem) {
-            parentItem.sidebar?.sections.push({ label: sectionLabel, items: [] });
-            sectionItem = parentItem.sidebar?.sections.find(section => section.label === sectionLabel);
+            throw new Error(`Section with id ${sectionId} not found in parent item ${parentId}`);
         }
         sectionItem!.items.push(...subItems);
     }

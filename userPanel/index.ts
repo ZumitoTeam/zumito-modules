@@ -38,6 +38,7 @@ export class UserPanelModule extends Module {
                 showDropdown: false,
                 sections: [
                     {
+                        id: 'general',
                         label: 'userPanel.sidebar.general',
                         items: [
                             {
