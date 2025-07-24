@@ -6,6 +6,7 @@ import { Client } from "zumito-framework/discord";
 import { PermissionFlagsBits } from "discord.js";
 import { UserPanelViewService } from "../services/UserPanelViewService";
 import { UserPanelAuthService } from "../services/UserPanelAuthService";
+import { UserPanelLanguageManager } from "../services/UserPanelLanguageManager";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -16,6 +17,7 @@ export class UserPanel extends Route {
     constructor(
         private client: Client = ServiceContainer.getService(Client),
         private userPanelAuthService = ServiceContainer.getService(UserPanelAuthService),
+        private userPanelLanguageManager = ServiceContainer.getService(UserPanelLanguageManager),
     ) {
         super();
     }
@@ -57,6 +59,7 @@ export class UserPanel extends Route {
                 });
             }
         }
+        const { lang, t, availableLanguages, defaultLanguage } = this.userPanelLanguageManager.getLanguageVariables(req, res);
         const content = await ejs.renderFile(
             path.resolve(__dirname, '../views/dashboard.ejs'),
             {
@@ -64,6 +67,7 @@ export class UserPanel extends Route {
                 botName,
                 botId,
                 botAvatar,
+                lang, t, availableLanguages, defaultLanguage
             }
         );
         const userPanelView = new UserPanelViewService();
