@@ -1,6 +1,7 @@
 import { ServiceContainer } from "zumito-framework";
 import { Client } from "zumito-framework/discord";
 import { NavigationService } from "./NavigationService";
+import { AdminColorsService } from "./AdminColorsService";
 import ejs from "ejs";
 import path from "path";
 
@@ -8,10 +9,12 @@ export class AdminViewService {
     private static layoutPath = path.resolve(__dirname, '../views/layouts/main.ejs');
     private client: Client;
     private navigationService: NavigationService;
+    private colorsService: AdminColorsService;
 
     constructor() {
         this.client = ServiceContainer.getService(Client);
         this.navigationService = ServiceContainer.getService(NavigationService);
+        this.colorsService = ServiceContainer.getService(AdminColorsService);
     }
 
     async render({
@@ -49,6 +52,7 @@ export class AdminViewService {
                 selectedNavItem,
                 botName,
                 reqPath,
+                colors: this.colorsService.getColors(),
                 ...extra
             }
         );

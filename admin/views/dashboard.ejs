@@ -1,11 +1,11 @@
 <div class="card mt-6 flex flex-col md:flex-row items-center gap-6">
     <img src="<%= botAvatar %>" alt="Bot Avatar" class="w-16 h-16 rounded-full border-4 border-discord-primary bg-discord-dark-400" />
     <div class="flex-1">
-        <div class="text-xl font-bold text-discord-white mb-1 flex items-center gap-2">
+        <div class="text-xl font-bold text-discord-foreground mb-1 flex items-center gap-2">
             <%= botName %>
             <span class="text-xs bg-discord-primary/20 text-discord-primary px-2 py-0.5 rounded">ID: <%= botId %></span>
         </div>
-        <div class="text-discord-white/60 text-sm mb-1 flex flex-wrap gap-4">
+        <div class="text-discord-foreground/60 text-sm mb-1 flex flex-wrap gap-4">
             <span>Estado: 
                 <span class="inline-flex items-center gap-1">
                     <% if (botStatus === 'online') { %>
@@ -25,7 +25,7 @@
             <span>Versión Node: <%= nodeVersion %></span>
             <span>Versión Discord.js: <%= discordjsVersion %></span>
         </div>
-        <div class="text-discord-white/40 text-xs">
+        <div class="text-discord-foreground/40 text-xs">
             Creado: <%= botCreatedAt %>
         </div>
     </div>
@@ -36,7 +36,7 @@
     <div class="flex items-center justify-between">
         <div>
             <div class="text-lg font-semibold mb-1">Invitar <%= botName %> a tu servidor</div>
-            <div class="text-discord-white/60 text-sm">Haz clic en el botón para copiar el enlace de invitación con permisos de administrador.</div>
+            <div class="text-discord-foreground/60 text-sm">Haz clic en el botón para copiar el enlace de invitación con permisos de administrador.</div>
         </div>
         <button @click="navigator.clipboard.writeText($refs.inviteUrl.value); copied = true; setTimeout(() => copied = false, 1200)" :class="copied ? 'bg-green-600' : ''" class="btn-primary ml-4 flex items-center space-x-2">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -45,5 +45,5 @@
             <span x-text="copied ? '¡Copiado!' : 'Copiar enlace'"></span>
         </button>
     </div>
-    <input x-ref="inviteUrl" id="inviteUrl" type="text" readonly class="mt-3 w-full px-3 py-2 bg-discord-dark-400 border border-discord-dark-100 rounded-md text-discord-white font-mono text-sm" value="https://discord.com/oauth2/authorize?client_id=<%= botId %>&permissions=8&scope=bot+applications.commands" />
+    <input x-ref="inviteUrl" id="inviteUrl" type="text" readonly class="mt-3 w-full px-3 py-2 bg-discord-dark-400 border border-discord-dark-100 rounded-md text-discord-foreground font-mono text-sm" value="https://discord.com/oauth2/authorize?client_id=<%= botId %>&permissions=8&scope=bot+applications.commands" />
 </div>
