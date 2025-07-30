@@ -6,6 +6,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import { UserPanelAuthService } from "./UserPanelAuthService";
 import { UserPanelLanguageManager } from "./UserPanelLanguageManager";
+import { UserPanelColorsService } from "./UserPanelColorsService";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -18,6 +19,7 @@ export class UserPanelViewService {
         private userPanelAuthService = ServiceContainer.getService(UserPanelAuthService),
         private translationManager = ServiceContainer.getService(TranslationManager),
         private userPanelLanguageManager = ServiceContainer.getService(UserPanelLanguageManager),
+        private colorsService = ServiceContainer.getService(UserPanelColorsService),
     ) {}
 
     async render({
@@ -70,6 +72,7 @@ export class UserPanelViewService {
                 languages: availableLanguages,
                 lang,
                 t,
+                colors: this.colorsService.getColors(),
                 ...options.extra,
                 hideSidebar: options.hideSidebar || false,
             }
