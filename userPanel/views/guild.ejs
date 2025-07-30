@@ -23,7 +23,7 @@
                 <div>
                     <span class="text-sm font-medium text-discord-foreground"><%= member.username %></span>
                     <% if (guild.isOwner) { %>
-                        <span class="ml-2 px-2 py-0.5 bg-discord-primary text-xs rounded-full text-white">Propietario</span>
+                        <span class="ml-2 px-2 py-0.5 bg-discord-primary text-xs rounded-full text-discord-foreground">Propietario</span>
                     <% } %>
                 </div>
             </div>
@@ -489,7 +489,7 @@
                     <label for="prefix" class="block text-discord-foreground font-medium mb-2">Prefijo del Bot</label>
                     <div class="flex">
                         <input type="text" id="prefix" value="!" class="bg-discord-dark-300 text-discord-foreground border-none rounded-l-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-discord-primary flex-grow">
-                        <button class="bg-discord-primary hover:bg-discord-primary/90 text-white px-4 py-2 rounded-r-md transition-colors">
+                        <button class="bg-discord-primary hover:bg-discord-primary/90 text-discord-foreground px-4 py-2 rounded-r-md transition-colors">
                             Guardar
                         </button>
                     </div>
@@ -506,7 +506,7 @@
                             <option>#general</option>
                             <option>#nuevos-miembros</option>
                         </select>
-                        <button class="bg-discord-primary hover:bg-discord-primary/90 text-white px-4 py-2 rounded-r-md transition-colors">
+                        <button class="bg-discord-primary hover:bg-discord-primary/90 text-discord-foreground px-4 py-2 rounded-r-md transition-colors">
                             Guardar
                         </button>
                     </div>
@@ -518,7 +518,7 @@
                     <label for="welcome-message" class="block text-discord-foreground font-medium mb-2">Mensaje de Bienvenida</label>
                     <textarea id="welcome-message" rows="3" class="w-full bg-discord-dark-300 text-discord-foreground border-none rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-discord-primary">¡Bienvenido {usuario} a {servidor}! Esperamos que disfrutes tu estancia.</textarea>
                     <p class="text-discord-gray-300 text-xs mt-1">Usa {usuario} para el nombre y {servidor} para el nombre del servidor</p>
-                    <button class="mt-2 bg-discord-primary hover:bg-discord-primary/90 text-white px-4 py-2 rounded-md transition-colors">
+                    <button class="mt-2 bg-discord-primary hover:bg-discord-primary/90 text-discord-foreground px-4 py-2 rounded-md transition-colors">
                         Guardar Mensaje
                     </button>
                 </div>
@@ -540,7 +540,7 @@
                             <label for="delete-command" class="text-discord-foreground">Eliminar mensajes de comandos después de ejecutarlos</label>
                         </div>
                     </div>
-                    <button class="mt-4 bg-discord-primary hover:bg-discord-primary/90 text-white px-4 py-2 rounded-md transition-colors">
+                    <button class="mt-4 bg-discord-primary hover:bg-discord-primary/90 text-discord-foreground px-4 py-2 rounded-md transition-colors">
                         Guardar Configuración
                     </button>
                 </div>
@@ -551,13 +551,13 @@
         <div class="bg-discord-dark-200 rounded-lg shadow-md p-6">
             <h3 class="text-lg font-semibold text-discord-foreground mb-4">Opciones Avanzadas</h3>
             <div class="space-y-3">
-                <button class="w-full bg-discord-warning hover:bg-discord-warning/90 text-black font-medium py-2 rounded-md transition-colors flex items-center justify-center">
+                <button class="w-full bg-discord-warning hover:bg-discord-warning/90 text-discord-foreground font-medium py-2 rounded-md transition-colors flex items-center justify-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                     </svg>
                     Reiniciar Bot
                 </button>
-                <button class="w-full bg-discord-danger hover:bg-discord-danger/90 text-white font-medium py-2 rounded-md transition-colors flex items-center justify-center">
+                <button class="w-full bg-discord-danger hover:bg-discord-danger/90 text-discord-foreground font-medium py-2 rounded-md transition-colors flex items-center justify-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                     </svg>

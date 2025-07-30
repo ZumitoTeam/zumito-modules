@@ -23,7 +23,7 @@ export class UserPanelModule extends Module {
         navigationService.registerItem({
             id: 'back',
             // back arriw icon
-            icon: `<svg class="w-6 h-6 text-discord-foreground/60 group-hover:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>`,
+            icon: `<svg class="w-6 h-6 text-discord-foreground/60 group-hover:text-discord-foreground" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>`,
             label: 'userPanel.nav.back',
             url: '/panel',
             order: 1,

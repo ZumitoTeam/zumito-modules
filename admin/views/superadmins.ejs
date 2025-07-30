@@ -10,9 +10,9 @@
             <div class="text-lg font-semibold mb-2">Agregar Superadmin</div>
             <form method="POST" action="/admin/superadmins/add" @submit="open = false">
                 <label class="block mb-2 text-sm">Discord User ID</label>
-                <input name="discordUserId" type="text" required class="w-full px-3 py-2 rounded bg-discord-dark-300 text-white mb-4 focus:outline-none focus:ring-2 focus:ring-discord-primary" placeholder="Ej: 123456789012345678" />
+                <input name="discordUserId" type="text" required class="w-full px-3 py-2 rounded bg-discord-dark-300 text-discord-foreground mb-4 focus:outline-none focus:ring-2 focus:ring-discord-primary" placeholder="Ej: 123456789012345678" />
                 <div class="flex justify-end gap-2">
-                    <button type="button" class="px-4 py-2 rounded bg-gray-500 text-white hover:bg-gray-600" @click="open = false">Cancelar</button>
+                    <button type="button" class="px-4 py-2 rounded bg-discord-dark-200 text-discord-foreground hover:bg-discord-dark-200/70" @click="open = false">Cancelar</button>
                     <button type="submit" class="btn-primary">Agregar</button>
                 </div>
             </form>

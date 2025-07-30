@@ -33,19 +33,19 @@
     <style type="text/tailwind">
         @layer components {
             .btn-primary {
-                @apply px-4 py-2 bg-discord-primary text-white rounded hover:bg-discord-primary/90 transition-colors focus:outline-none focus:ring-2 focus:ring-discord-primary/50 focus:ring-offset-2 focus:ring-offset-discord-dark-300;
+                @apply px-4 py-2 bg-discord-primary text-discord-foreground rounded hover:bg-discord-primary/90 transition-colors focus:outline-none focus:ring-2 focus:ring-discord-primary/50 focus:ring-offset-2 focus:ring-offset-discord-dark-300;
             }
             .btn-secondary {
-                @apply px-4 py-2 bg-discord-dark-100 text-white rounded hover:bg-discord-dark-100/90 transition-colors focus:outline-none focus:ring-2 focus:ring-discord-dark-100/50;
+                @apply px-4 py-2 bg-discord-dark-100 text-discord-foreground rounded hover:bg-discord-dark-100/90 transition-colors focus:outline-none focus:ring-2 focus:ring-discord-dark-100/50;
             }
             .btn-danger {
-                @apply px-4 py-2 bg-discord-danger text-white rounded hover:bg-discord-danger/90 transition-colors focus:outline-none focus:ring-2 focus:ring-discord-danger/50;
+                @apply px-4 py-2 bg-discord-danger text-discord-foreground rounded hover:bg-discord-danger/90 transition-colors focus:outline-none focus:ring-2 focus:ring-discord-danger/50;
             }
             .card {
-                @apply p-6 bg-discord-dark-200 rounded-lg shadow-lg text-white border border-discord-dark-100/30;
+                @apply p-6 bg-discord-dark-200 rounded-lg shadow-lg text-discord-foreground border border-discord-dark-100/30;
             }
             .input {
-                @apply px-3 py-2 bg-discord-dark-400 border border-discord-dark-100 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-discord-primary/50;
+                @apply px-3 py-2 bg-discord-dark-400 border border-discord-dark-100 rounded-md text-discord-foreground placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-discord-primary/50;
             }
             .scrollbar {
                 @apply scrollbar-thin scrollbar-thumb-discord-dark-100 scrollbar-track-discord-dark-300;
@@ -62,14 +62,14 @@
             height: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: #1e2124;
+            background: <%= colors.dark[400] %>;
         }
         ::-webkit-scrollbar-thumb {
-            background: #424549;
+            background: <%= colors.dark[100] %>;
             border-radius: 4px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #5865F2;
+            background: <%= colors.primary %>;
         }
         
         /* Estilos para Alpine.js */
@@ -78,7 +78,7 @@
         }
     </style>
 </head>
-<body class="bg-discord-dark-300 min-h-screen text-white overflow-x-hidden">
+<body class="bg-discord-dark-300 min-h-screen text-discord-foreground overflow-x-hidden">
     <!-- Navbar -->
     <nav class="bg-discord-dark-400 shadow-lg sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4">
@@ -152,11 +152,11 @@
                     <a href="<%= item.url %>" class="flex flex-col items-center justify-center gap-1">
                         <div class="w-14 h-14 bg-discord-dark-200 rounded-[16px] flex items-center justify-center shadow-md<% if (selectedNavItem && item.url === selectedNavItem.url) { %> bg-discord-primary<% } %>">
                             <% if (item.icon) { %>
-                                <div class="w-7 h-7 text-discord-foreground/80<% if (selectedNavItem && item.url === selectedNavItem.url) { %> text-white<% } %>">
+                                <div class="w-7 h-7 text-discord-foreground/80<% if (selectedNavItem && item.url === selectedNavItem.url) { %> text-discord-foreground<% } %>">
                                     <%- item.icon %>
                                 </div>
                             <% } else { %>
-                                <svg class="w-7 h-7 text-discord-foreground/80<% if (selectedNavItem && item.url === selectedNavItem.url) { %> text-white<% } %>" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <svg class="w-7 h-7 text-discord-foreground/80<% if (selectedNavItem && item.url === selectedNavItem.url) { %> text-discord-foreground<% } %>" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                                 </svg>
                             <% } %>
@@ -173,11 +173,11 @@
                         <a href="<%= item.url %>"
                            class="w-12 h-12 bg-discord-dark-200 rounded-[24px] hover:rounded-[16px] hover:bg-discord-primary transition-all duration-200 flex items-center justify-center group relative<% if (selectedNavItem && item.url === selectedNavItem.url) { %> bg-discord-primary rounded-[16px]<% } %>">
                             <% if (item.icon) { %>
-                                <div class="w-6 h-6 text-discord-foreground/60 group-hover:text-white<% if (selectedNavItem && item.url === selectedNavItem.url) { %> text-white<% } %>">
+                                <div class="w-6 h-6 text-discord-foreground/60 group-hover:text-discord-foreground<% if (selectedNavItem && item.url === selectedNavItem.url) { %> text-discord-foreground<% } %>">
                                     <%- item.icon %>
                                 </div>
                             <% } else { %>
-                                <svg class="w-6 h-6 text-discord-foreground/60 group-hover:text-white<% if (selectedNavItem && item.url === selectedNavItem.url) { %> text-white<% } %>" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <svg class="w-6 h-6 text-discord-foreground/60 group-hover:text-discord-foreground<% if (selectedNavItem && item.url === selectedNavItem.url) { %> text-discord-foreground<% } %>" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
                                 </svg>
                             <% } %>
@@ -214,7 +214,7 @@
                             </div>
                             <div class="mt-2 space-y-1">
                                 <% for (const item of section.items) { %>
-                                    <a href="<%= item.url %>" class="flex items-center px-2 py-1.5 rounded text-discord-foreground/60 hover:text-discord-foreground hover:bg-discord-dark-200 transition-colors<% if (reqPath === item.url) { %> bg-discord-dark-200 text-white<% } %>">
+                                    <a href="<%= item.url %>" class="flex items-center px-2 py-1.5 rounded text-discord-foreground/60 hover:text-discord-foreground hover:bg-discord-dark-200 transition-colors<% if (reqPath === item.url) { %> bg-discord-dark-200 text-discord-foreground<% } %>">
                                         <span class="mr-1.5">#</span>
                                         <span class="truncate"><%= item.label %></span>
                                         <% if (item.badge) { %>
