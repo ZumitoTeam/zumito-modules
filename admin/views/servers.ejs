@@ -1,0 +1,37 @@
+<div class="card mt-6">
+    <div class="text-lg font-semibold mb-4">Servidores</div>
+    <div id="serverContainer" class="relative h-96 overflow-auto bg-discord-dark-300 rounded">
+        <div id="spacer"></div>
+    </div>
+</div>
+<script>
+    const guilds = <%- JSON.stringify(guilds) %>;
+    const container = document.getElementById('serverContainer');
+    const itemHeight = 64;
+    const spacer = document.getElementById('spacer');
+    const list = document.createElement('div');
+    list.style.position = 'absolute';
+    list.style.top = 0;
+    list.style.left = 0;
+    list.style.right = 0;
+    container.appendChild(list);
+    spacer.style.height = (guilds.length * itemHeight) + 'px';
+
+    function render() {
+        const scrollTop = container.scrollTop;
+        const start = Math.floor(scrollTop / itemHeight);
+        const end = Math.min(guilds.length, start + Math.ceil(container.clientHeight / itemHeight) + 1);
+        list.innerHTML = '';
+        for (let i = start; i < end; i++) {
+            const g = guilds[i];
+            const item = document.createElement('div');
+            item.className = 'flex items-center gap-3 px-4 border-b border-discord-dark-100 h-16 absolute left-0 right-0';
+            item.style.top = (i * itemHeight) + 'px';
+            item.innerHTML = `${g.icon ? `<img src="${g.icon}" class="w-10 h-10 rounded-full"/>` : `<div class="w-10 h-10 bg-discord-dark-100 rounded-full"></div>`}<span class="truncate">${g.name}</span>`;
+            list.appendChild(item);
+        }
+    }
+
+    container.addEventListener('scroll', render);
+    render();
+</script>
