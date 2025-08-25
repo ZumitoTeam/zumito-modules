@@ -34,6 +34,7 @@ export class AdminModule extends Module {
                             { label: 'Dashboard', url: '/admin' },
                             { label: 'Settings', url: '/admin/settings' },
                             { label: 'Superadmins', url: '/admin/superadmins' },
+                            { label: 'Servers', url: '/admin/servers' },
                         ],
                     },
                 ],
