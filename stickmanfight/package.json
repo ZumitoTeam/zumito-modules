@@ -1,0 +1,12 @@
+{
+  "name": "@zumito-team/stickmanfight-module",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@zumito-team/canvas-module": "file:../canvas",
+    "zumito-framework": "^1.14.2"
+  }
+}
