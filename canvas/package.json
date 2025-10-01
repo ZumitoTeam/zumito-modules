@@ -1,0 +1,14 @@
+{
+  "name": "@zumito-team/canvas-module",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "canvas": "^2.11.2",
+    "gifencoder": "^2.0.1",
+    "sharp": "^0.33.4",
+    "zumito-framework": "^1.13.0"
+  }
+}
