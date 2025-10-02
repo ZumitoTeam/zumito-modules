@@ -2,12 +2,21 @@
   "name": "@zumito-team/user-panel-module",
   "version": "1.0.0",
   "main": "index.js",
+  "types": "index.d.ts",
   "author": "",
   "license": "ISC",
   "description": "",
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
   "dependencies": {
     "ejs": "^3.1.10",
     "jose": "^6.0.12",
     "zumito-framework": "^1.10.0"
+  },
+  "devDependencies": {
+    "@types/ejs": "^3.1.5",
+    "typescript": "^5.9.3"
   }
 }
