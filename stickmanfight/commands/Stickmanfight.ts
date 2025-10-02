@@ -1,7 +1,6 @@
 import { Command, CommandParameters, CommandType, CommandArgDefinition } from 'zumito-framework';
 import { EmbedBuilder, GuildMember, User, MessageFlags } from 'zumito-framework/discord';
 import { CanvasUtils } from '@zumito-team/canvas-module';
-import type { CanvasRenderingContext2D } from 'canvas';
 import { getStickmanfightEmbedColor } from '../config/StickmanfightConfig';
 
 export class Stickmanfight extends Command {
@@ -16,7 +15,11 @@ export class Stickmanfight extends Command {
         if (!guild) return;
         const members = guild.members.cache.filter((m) => !m.user.bot).map((m) => m as GuildMember);
         if (members.length < 2) {
-            (message || interaction!)?.reply({ content: 'Not enough members', flags: MessageFlags.Ephemeral });
+            if (interaction) {
+                await interaction.reply({ content: 'Not enough members', flags: MessageFlags.Ephemeral });
+            } else if (message) {
+                await message.reply({ content: 'Not enough members' });
+            }
             return;
         }
         const first = args.get('user1') as User | undefined;
@@ -35,7 +38,7 @@ export class Stickmanfight extends Command {
         const width = 500;
         const height = 300;
         const canvasUtil = new CanvasUtils({ width, height, delay: 100, quality: 10, repeat: 0, isGif: true });
-        const ctx: CanvasRenderingContext2D = canvasUtil.getContext();
+        const ctx = canvasUtil.getContext();
         canvasUtil.startEncoder();
 
         const avatar1 = await CanvasUtils.loadImage(firstMember.user.displayAvatarURL({ extension: 'png', size: 64 }));

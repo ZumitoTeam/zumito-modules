@@ -2,11 +2,19 @@
   "name": "@zumito-team/stickmanfight-module",
   "version": "1.0.0",
   "main": "index.js",
+  "types": "index.d.ts",
   "author": "",
   "license": "ISC",
   "description": "",
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
   "dependencies": {
     "@zumito-team/canvas-module": "file:../canvas",
     "zumito-framework": "^1.14.2"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
   }
 }
