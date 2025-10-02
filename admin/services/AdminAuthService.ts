@@ -54,7 +54,10 @@ export class AdminAuthService {
      */
     async isSuperAdmin(discordUserId: string): Promise<boolean> {
         if (!discordUserId) return false;
-        const admin = await this.framework.database.models.AdminUser.findOne({ where: { discordUserId, isSuperAdmin: true } });
+        const models = (this.framework.database as any)?.models;
+        if (!models?.AdminUser) return false;
+
+        const admin = await models.AdminUser.findOne({ where: { discordUserId, isSuperAdmin: true } });
         return !!admin;
     }
 }

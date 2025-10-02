@@ -41,8 +41,10 @@ jobs:
               NEW_VERSION="$MAJOR.$NEW_MINOR.0"
               echo "Bumping $PKG_NAME from $CURRENT_VERSION to $NEW_VERSION"
               jq ".version=\"$NEW_VERSION\"" "$folder/package.json" > "$folder/package.json.tmp" && mv "$folder/package.json.tmp" "$folder/package.json"
-              cd $folder
+              pushd "$folder"
+              npm install
+              npm run build --if-present
               npm publish --access public
-              cd ..
+              popd
             fi
           done < changed_folders.txt
