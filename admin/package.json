@@ -1,8 +1,8 @@
 {
   "name": "@zumito-team/admin-module",
   "version": "1.0.0",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "index.js",
+  "types": "index.d.ts",
   "author": "",
   "license": "ISC",
   "description": "",
@@ -19,7 +19,4 @@
     "@types/ejs": "^3.1.5",
     "typescript": "^5.9.3"
   },
-  "files": [
-    "/dist" 
-  ]
 }
