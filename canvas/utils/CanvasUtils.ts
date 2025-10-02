@@ -70,8 +70,10 @@ export class CanvasUtils {
             buffer = this.encoder.out.getData();
             if (!finalFilename) finalFilename = 'image.gif';
         } else {
-            const format = this.config.format || 'image/png';
-            buffer = this.canvas.toBuffer(format);
+            const format = this.config.format ?? 'image/png';
+            buffer = format === 'image/jpeg'
+                ? this.canvas.toBuffer('image/jpeg')
+                : this.canvas.toBuffer('image/png');
             if (!finalFilename) {
                 const ext = format.split('/')[1];
                 finalFilename = `image.${ext}`;

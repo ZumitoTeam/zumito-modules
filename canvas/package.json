@@ -2,13 +2,21 @@
   "name": "@zumito-team/canvas-module",
   "version": "1.0.0",
   "main": "index.js",
+  "types": "index.d.ts",
   "author": "",
   "license": "ISC",
   "description": "",
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
   "dependencies": {
     "canvas": "^2.11.2",
     "gifencoder": "^2.0.1",
     "sharp": "^0.33.4",
     "zumito-framework": "^1.13.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
   }
 }
