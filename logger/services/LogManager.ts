@@ -29,7 +29,11 @@ export class LogManager {
         if (logChannel) {
             await this.logToChannel(logChannel, data);
         }
-        const Logs = this.framework.database.models.Logs;
+        const models = (this.framework.database as any)?.models;
+        if (!models?.Logs) {
+            return;
+        }
+        const Logs = models.Logs;
         let log = new Logs({
             title: data.title,
             description: data.description,
