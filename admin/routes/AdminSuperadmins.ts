@@ -1,8 +1,12 @@
 import { Route, RouteMethod, ServiceContainer, ZumitoFramework } from 'zumito-framework';
 import ejs from 'ejs';
 import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 import { AdminViewService } from "../services/AdminViewService";
 import { AdminAuthService } from '../services/AdminAuthService';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export class AdminSuperadmins extends Route {
     method = RouteMethod.get;

@@ -4,6 +4,10 @@ import { NavigationService } from "./NavigationService";
 import { AdminColorsService } from "./AdminColorsService";
 import ejs from "ejs";
 import path from "path";
+import { fileURLToPath } from "url";
+import { dirname } from "path";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export class AdminViewService {
     private static layoutPath = path.resolve(__dirname, '../views/layouts/main.ejs');
