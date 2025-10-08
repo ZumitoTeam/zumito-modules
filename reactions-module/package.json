@@ -1,0 +1,21 @@
+{
+  "name": "@zumito-team/reactions-module",
+  "version": "1.0.0",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "author": "",
+  "license": "ISC",
+  "description": "Gestión de reacciones con categorías, plantillas traducibles e imágenes personalizadas.",
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@zumito-team/admin-module": "^1.0.0",
+    "ejs": "^3.1.10",
+    "zumito-framework": "^1.14.2"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}

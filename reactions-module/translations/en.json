@@ -1,0 +1,26 @@
+{
+  "command": {
+    "reaction": {
+      "description": "Send a reaction with a random image from the selected category.",
+      "args": {
+        "category": {
+          "description": "Reaction category you want to use."
+        },
+        "member": {
+          "description": "Member to mention in the reaction."
+        }
+      }
+    }
+  },
+  "reaction": {
+    "errors": {
+      "categoryRequired": "Please provide a reaction category.",
+      "notFound": "I couldn't find the category \"{category}\". Try checking the spelling.",
+      "noTemplate": "That category does not have any message template yet.",
+      "noImage": "There are no images available for \"{category}\" right now."
+    },
+    "success": {
+      "footer": "Source: {source}"
+    }
+  }
+}

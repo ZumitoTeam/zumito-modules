@@ -1,0 +1,26 @@
+{
+  "command": {
+    "reaction": {
+      "description": "Envía una reacción con una imagen aleatoria de la categoría elegida.",
+      "args": {
+        "category": {
+          "description": "La categoría de reacción que quieres usar."
+        },
+        "member": {
+          "description": "Miembro al que quieres mencionar en la reacción."
+        }
+      }
+    }
+  },
+  "reaction": {
+    "errors": {
+      "categoryRequired": "Debes indicar una categoría de reacción.",
+      "notFound": "No encontré la categoría \"{category}\". Revisa la ortografía.",
+      "noTemplate": "Esa categoría aún no tiene un mensaje configurado.",
+      "noImage": "No hay imágenes disponibles para \"{category}\" en este momento."
+    },
+    "success": {
+      "footer": "Fuente: {source}"
+    }
+  }
+}
