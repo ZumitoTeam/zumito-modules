@@ -58,7 +58,7 @@ export class AdminReactionsImageUpdate extends Route {
         const url = typeof req.body?.url === 'string' ? req.body.url.trim() : '';
 
         if (!key || !url) {
-            res.redirect('/admin/reactions?status=image-error');
+            res.redirect('/admin/reactions/images?status=image-error');
             return;
         }
 
@@ -74,10 +74,10 @@ export class AdminReactionsImageUpdate extends Route {
             }
 
             await this.reactionService.updateImage(key, url, updates);
-            res.redirect('/admin/reactions?status=image-updated');
+            res.redirect('/admin/reactions/images?status=image-updated');
         } catch (error) {
             console.error('[AdminReactionsImageUpdate] Unable to update image:', error);
-            res.redirect('/admin/reactions?status=image-error');
+            res.redirect('/admin/reactions/images?status=image-error');
         }
     }
 }

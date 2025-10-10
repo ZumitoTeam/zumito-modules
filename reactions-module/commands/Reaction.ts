@@ -1,6 +1,7 @@
 import {
     Command,
     CommandArgDefinition,
+    CommandChoiceDefinition,
     CommandParameters,
     CommandType,
     ServiceContainer,

@@ -6,23 +6,18 @@ import ejs from 'ejs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const CATEGORY_STATUS_MESSAGES: Record<
-    string,
-    { type: 'success' | 'error'; text: string }
-> = {
-    'category-saved': { type: 'success', text: 'Categoría guardada correctamente.' },
-    'category-error': { type: 'error', text: 'No se pudo guardar la categoría.' },
-    'category-deleted': {
-        type: 'success',
-        text: 'Categoría eliminada. Se usarán los valores por defecto si existían.',
-    },
+const IMAGE_STATUS_MESSAGES: Record<string, { type: 'success' | 'error'; text: string }> = {
+    'image-added': { type: 'success', text: 'Imagen agregada a la categoría.' },
+    'image-updated': { type: 'success', text: 'Imagen actualizada correctamente.' },
+    'image-deleted': { type: 'success', text: 'Imagen eliminada de la categoría.' },
+    'image-error': { type: 'error', text: 'No se pudo procesar la imagen solicitada.' },
 };
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-export class AdminReactionsPage extends Route {
+export class AdminReactionsImagesPage extends Route {
     method = RouteMethod.get;
-    path = '/admin/reactions';
+    path = '/admin/reactions/images';
 
     private readonly adminAuthService: AdminAuthService;
     private readonly adminViewService: AdminViewService;
@@ -49,10 +44,10 @@ export class AdminReactionsPage extends Route {
 
         const categories: ReactionCategory[] = await this.reactionService.listCategories();
         const statusKey = typeof req.query?.status === 'string' ? req.query.status : null;
-        const feedback = statusKey ? CATEGORY_STATUS_MESSAGES[statusKey] ?? null : null;
+        const feedback = statusKey ? IMAGE_STATUS_MESSAGES[statusKey] ?? null : null;
 
         const content = await ejs.renderFile(
-            path.resolve(__dirname, '../views/categories.ejs'),
+            path.resolve(__dirname, '../views/images.ejs'),
             {
                 categories,
                 feedback,
@@ -60,7 +55,7 @@ export class AdminReactionsPage extends Route {
         );
 
         const html = await this.adminViewService.render({
-            title: 'Reacciones',
+            title: 'Reacciones · Imágenes',
             content,
             reqPath: this.path,
             user: req.user || { name: 'Admin' },
@@ -70,4 +65,4 @@ export class AdminReactionsPage extends Route {
     }
 }
 
-export default AdminReactionsPage;
+export default AdminReactionsImagesPage;

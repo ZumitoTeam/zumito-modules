@@ -57,7 +57,7 @@ export class AdminReactionsImageAdd extends Route {
         const source = typeof req.body?.source === 'string' ? req.body.source.trim() : '';
 
         if (!key || !url || !source) {
-            res.redirect('/admin/reactions?status=image-error');
+            res.redirect('/admin/reactions/images?status=image-error');
             return;
         }
 
@@ -69,10 +69,10 @@ export class AdminReactionsImageAdd extends Route {
                 description,
             };
             await this.reactionService.addImage(key, payload);
-            res.redirect('/admin/reactions?status=image-added');
+            res.redirect('/admin/reactions/images?status=image-added');
         } catch (error) {
             console.error('[AdminReactionsImageAdd] Unable to add image:', error);
-            res.redirect('/admin/reactions?status=image-error');
+            res.redirect('/admin/reactions/images?status=image-error');
         }
     }
 }

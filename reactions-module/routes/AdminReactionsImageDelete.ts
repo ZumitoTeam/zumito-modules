@@ -29,16 +29,16 @@ export class AdminReactionsImageDelete extends Route {
         const url = typeof req.body?.url === 'string' ? req.body.url.trim() : '';
 
         if (!key || !url) {
-            res.redirect('/admin/reactions?status=image-error');
+            res.redirect('/admin/reactions/images?status=image-error');
             return;
         }
 
         try {
             await this.reactionService.removeImage(key, url);
-            res.redirect('/admin/reactions?status=image-deleted');
+            res.redirect('/admin/reactions/images?status=image-deleted');
         } catch (error) {
             console.error('[AdminReactionsImageDelete] Unable to delete image:', error);
-            res.redirect('/admin/reactions?status=image-error');
+            res.redirect('/admin/reactions/images?status=image-error');
         }
     }
 }

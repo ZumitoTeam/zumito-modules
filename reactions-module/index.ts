@@ -23,7 +23,7 @@ export class ReactionsModule extends Module {
             const navigationService = ServiceContainer.getService(NavigationService);
             navigationService.registerItem({
                 id: 'reactions',
-                icon: `<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-discord-white/60 group-hover:text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 5.25a3 3 0 0 1 3 3v.75h.75a2.25 2.25 0 0 1 0 4.5h-.75v.75a3 3 0 0 1-3 3H9.75l-3 3v-3h-.75a3 3 0 0 1-3-3v-1.5a3 3 0 0 1 3-3h.75v-.75a3 3 0 0 1 3-3z"/></svg>`,
+                icon: `<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-discord-white/60 group-hover:text-white" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="9" cy="9" r="1.5" fill="currentColor"/><circle cx="15" cy="9" r="1.5" fill="currentColor"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><path d="M17 4.5c0-.83.67-1.5 1.5-1.5S20 3.67 20 4.5c0 1.5-1.5 2.5-1.5 2.5S17 6 17 4.5Z"/></svg>`,
                 label: 'Reacciones',
                 url: '/admin/reactions',
                 order: 6,
@@ -33,7 +33,10 @@ export class ReactionsModule extends Module {
                     sections: [
                         {
                             label: 'Reacciones',
-                            items: [{ label: 'Categorías', url: '/admin/reactions' }],
+                            items: [
+                                { label: 'Categorías', url: '/admin/reactions' },
+                                { label: 'Imágenes', url: '/admin/reactions/images' },
+                            ],
                         },
                     ],
                 },
@@ -49,6 +52,7 @@ export { DEFAULT_REACTION_CATEGORIES } from './defaults/ReactionDefaults';
 export { AdminReactionsPage } from './routes/AdminReactionsPage';
 export { AdminReactionsCategorySave } from './routes/AdminReactionsCategorySave';
 export { AdminReactionsCategoryDelete } from './routes/AdminReactionsCategoryDelete';
+export { AdminReactionsImagesPage } from './routes/AdminReactionsImagesPage';
 export { AdminReactionsImageAdd } from './routes/AdminReactionsImageAdd';
 export { AdminReactionsImageUpdate } from './routes/AdminReactionsImageUpdate';
 export { AdminReactionsImageDelete } from './routes/AdminReactionsImageDelete';

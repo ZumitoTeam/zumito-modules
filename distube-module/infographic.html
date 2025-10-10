@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Zumito Music Module - Infografía</title>
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <style>
+      body {
+        background: rgb(1, 26, 66)
+      }
+    </style>
+  </head>
+  <body class="min-h-screen text-slate-100 antialiased">
+    <!-- Export Buttons -->
+    <div class="fixed top-6 right-6 z-50 flex flex-col gap-2">
+      <button 
+        id="exportFullBtn" 
+        class="bg-gradient-to-r from-sky-500 to-sky-600 hover:from-sky-400 hover:to-sky-500 text-white px-3 py-2 rounded-lg shadow-lg hover:shadow-xl transition-all transform hover:scale-105 flex items-center gap-2 text-xs font-semibold"
+      >
+        <span>🖼️</span>
+        Completo
+      </button>
+      <button 
+        id="exportTransparentBtn" 
+        class="bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-400 hover:to-purple-500 text-white px-3 py-2 rounded-lg shadow-lg hover:shadow-xl transition-all transform hover:scale-105 flex items-center gap-2 text-xs font-semibold"
+      >
+        <span>🎭</span>
+        Transparente
+      </button>
+      <button 
+        id="exportBtn" 
+        class="bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 hover:to-emerald-500 text-white px-3 py-2 rounded-lg shadow-lg hover:shadow-xl transition-all transform hover:scale-105 flex items-center gap-2 text-xs font-semibold"
+      >
+        <span>📷</span>
+        Secciones
+      </button>
+    </div>
+    
+    <div class="mx-auto max-w-6xl px-6 py-16">
+      <header id="section-header" class="mb-16 grid gap-8 lg:grid-cols-[1fr_300px_300px]">
+        <!-- Hero Content -->
+        <div>
+          <p class="text-sm uppercase tracking-[0.3rem] text-slate-400">Zumito Modules</p>
+          <h1 class="mt-4 text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl">
+            Music Module
+          </h1>
+          <p class="mt-4 max-w-2xl text-lg text-slate-300">
+            Automatiza la experiencia musical de tu comunidad con una solución full-stack:
+            comandos intuitivos, streaming multi-origen y panel administrativo listo para producción.
+          </p>
+          
+          <!-- Screenshot Placeholder -->
+          <div class="mt-8 rounded-2xl border-2 border-dashed border-slate-600 bg-slate-800/30 p-12 text-center">
+            <div class="mx-auto h-16 w-16 rounded-full bg-slate-700 flex items-center justify-center text-3xl">📷</div>
+            <p class="mt-4 text-sm text-slate-400">Screenshot del bot en acción</p>
+            <p class="text-xs text-slate-500">Mostrar comandos slash y interfaz</p>
+          </div>
+        </div>
+        
+        <!-- Stats Card -->
+        <div class="rounded-2xl border border-slate-700 bg-slate-900/60 p-6 shadow-2xl shadow-sky-700/20">
+          <div class="flex items-center gap-3 text-emerald-300">
+            <span class="rounded-full bg-emerald-500/10 p-4 text-2xl">🎵</span>
+            <p class="text-xs uppercase tracking-[0.25rem] text-slate-300">Biblioteca integrada</p>
+          </div>
+          <p class="mt-4 text-5xl font-semibold text-emerald-400">4+&nbsp;fuentes</p>
+          <p class="mt-3 text-sm leading-relaxed text-slate-300">
+            YouTube, Spotify, SoundCloud y BandLab listos para usar con una sola configuración.
+          </p>
+        </div>
+        
+        <!-- Logo/Brand Placeholder -->
+        <div class="rounded-2xl border-2 border-dashed border-slate-600 bg-slate-800/30 p-8 text-center flex flex-col items-center justify-center">
+          <div class="mx-auto h-20 w-20 rounded-2xl bg-gradient-to-br from-sky-500 to-indigo-600 flex items-center justify-center text-3xl font-bold text-white">Z</div>
+          <p class="mt-4 text-sm text-slate-400">Logo de Zumito</p>
+          <p class="text-xs text-slate-500">Branding visual</p>
+        </div>
+      </header>
+
+      <main class="space-y-16">
+        <section id="section-features" class="grid gap-10 md:grid-cols-3">
+          <div class="rounded-2xl border border-slate-700 bg-slate-900/60 p-8 shadow-xl shadow-indigo-900/30">
+            <div class="flex items-center gap-4 mb-6">
+              <span class="rounded-2xl bg-sky-500/10 p-4 text-sky-400 text-3xl">
+                🎧
+              </span>
+              <h2 class="text-xl font-semibold">Streaming Premium</h2>
+            </div>
+            
+            <!-- Platform Icons Placeholder -->
+            <div class="mb-4 flex gap-3 justify-center">
+              <div class="h-12 w-12 rounded-xl bg-red-500/20 border border-red-500/30 flex items-center justify-center text-red-400">YT</div>
+              <div class="h-12 w-12 rounded-xl bg-green-500/20 border border-green-500/30 flex items-center justify-center text-green-400">SP</div>
+              <div class="h-12 w-12 rounded-xl bg-orange-500/20 border border-orange-500/30 flex items-center justify-center text-orange-400">SC</div>
+              <div class="h-12 w-12 rounded-xl bg-blue-500/20 border border-blue-500/30 flex items-center justify-center text-blue-400">BL</div>
+            </div>
+            
+            <p class="text-sm text-slate-300 text-center">
+              Integraciones oficiales con YouTube, Spotify, SoundCloud y BandLab vía DisTube 5.
+              Manejo automático de enlaces, colas y sugerencias.
+            </p>
+          </div>
+          
+          <div class="rounded-2xl border border-slate-700 bg-slate-900/60 p-8 shadow-xl shadow-indigo-900/30">
+            <div class="flex items-center gap-4 mb-6">
+              <span class="rounded-2xl bg-emerald-500/10 p-4 text-emerald-400 text-3xl">
+                🛡️
+              </span>
+              <h2 class="text-xl font-semibold">Estable y Escalable</h2>
+            </div>
+            
+            <!-- Architecture Diagram Placeholder -->
+            <div class="mb-4 rounded-xl border-2 border-dashed border-slate-600 bg-slate-800/30 p-6 text-center">
+              <div class="text-2xl mb-2">⚙️</div>
+              <p class="text-xs text-slate-400">Diagrama de arquitectura</p>
+              <p class="text-xs text-slate-500">Node.js + Discord.js + ffmpeg</p>
+            </div>
+            
+            <p class="text-sm text-slate-300 text-center">
+              Uso de @discordjs/voice con protocolo DAVE y fallback Opus listo para Node 22.
+              Supervisión de ffmpeg y manejo de errores para queues sin interrupciones.
+            </p>
+          </div>
+          
+          <div class="rounded-2xl border border-slate-700 bg-slate-900/60 p-8 shadow-xl shadow-indigo-900/30">
+            <div class="flex items-center gap-4 mb-6">
+              <span class="rounded-2xl bg-fuchsia-500/10 p-4 text-fuchsia-400 text-3xl">
+                📊
+              </span>
+              <h2 class="text-xl font-semibold">Panel Administrativo</h2>
+            </div>
+            
+            <!-- Dashboard Mockup Placeholder -->
+            <div class="mb-4 rounded-xl border-2 border-dashed border-slate-600 bg-slate-800/30 p-4">
+              <div class="h-2 bg-slate-600 rounded mb-2"></div>
+              <div class="h-2 bg-slate-600 rounded w-3/4 mb-2"></div>
+              <div class="h-2 bg-slate-600 rounded w-1/2"></div>
+              <p class="text-xs text-slate-400 mt-3 text-center">Mockup del panel</p>
+            </div>
+            
+            <p class="text-sm text-slate-300 text-center">
+              Integrado con el User Panel Module para editar playlists, gestionar permisos y
+              monitorear la actividad en tiempo real.
+            </p>
+          </div>
+        </section>
+
+        <section id="section-workflow" class="grid gap-12 rounded-2xl border border-slate-700 bg-slate-900/60 p-10 shadow-xl shadow-slate-900/40 lg:grid-cols-[1fr_1fr_300px]">
+          <!-- Workflow Steps -->
+          <div>
+            <h2 class="text-2xl font-semibold mb-2">Workflow optimizado</h2>
+            <p class="text-sm leading-relaxed text-slate-300 mb-8">
+              Diseñado para operadores y comunidades que quieren un bot musical robusto sin sacrificar
+              la experiencia de los usuarios.
+            </p>
+            
+            <div class="space-y-6">
+              <div class="flex gap-4 items-start">
+                <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-sky-500 to-sky-600 text-white font-bold text-lg shadow-lg">1</div>
+                <div class="flex-1">
+                  <h3 class="font-semibold text-slate-100 mb-2">🔗 Conecta tu bot</h3>
+                  <p class="text-sm text-slate-300">Configuración rápida con intents y opciones documentadas en Zumito Framework.</p>
+                </div>
+              </div>
+              
+              <div class="flex gap-4 items-start">
+                <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-indigo-500 to-indigo-600 text-white font-bold text-lg shadow-lg">2</div>
+                <div class="flex-1">
+                  <h3 class="font-semibold text-slate-100 mb-2">⚙️ Configura fuentes</h3>
+                  <p class="text-sm text-slate-300">Activa o personaliza plugins para controlar qué proveedores están disponibles.</p>
+                </div>
+              </div>
+              
+              <div class="flex gap-4 items-start">
+                <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-500 to-emerald-600 text-white font-bold text-lg shadow-lg">3</div>
+                <div class="flex-1">
+                  <h3 class="font-semibold text-slate-100 mb-2">💰 Monetiza</h3>
+                  <p class="text-sm text-slate-300">Ofrece perks premium, playlists preconfiguradas y gestión desde el panel.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Tech Stack & Stats -->
+          <div class="space-y-6">
+            <div class="rounded-2xl border border-slate-700 bg-slate-950/60 p-6">
+              <div class="flex items-center gap-3 mb-4">
+                <span class="text-2xl">🛠️</span>
+                <p class="text-xs uppercase tracking-[0.25rem] text-slate-500">Stack Tecnológico</p>
+              </div>
+              <div class="grid grid-cols-2 gap-3">
+                <div class="rounded-xl bg-slate-800/60 p-3 text-center">
+                  <div class="text-2xl mb-1">📘</div>
+                  <p class="text-xs text-slate-400">Discord.js 14</p>
+                </div>
+                <div class="rounded-xl bg-slate-800/60 p-3 text-center">
+                  <div class="text-2xl mb-1">🟢</div>
+                  <p class="text-xs text-slate-400">Node 18-22</p>
+                </div>
+                <div class="rounded-xl bg-slate-800/60 p-3 text-center">
+                  <div class="text-2xl mb-1">🐳</div>
+                  <p class="text-xs text-slate-400">Docker Ready</p>
+                </div>
+                <div class="rounded-xl bg-slate-800/60 p-3 text-center">
+                  <div class="text-2xl mb-1">⚡</div>
+                  <p class="text-xs text-slate-400">Panel Zumito</p>
+                </div>
+              </div>
+            </div>
+            
+            <div class="rounded-2xl border border-slate-700 bg-slate-950/60 p-6">
+              <div class="flex items-center gap-3 mb-4">
+                <span class="text-2xl">📊</span>
+                <p class="text-xs uppercase tracking-[0.25rem] text-slate-500">Métricas en Vivo</p>
+              </div>
+              <dl class="space-y-4">
+                <div class="flex items-center justify-between">
+                  <dt class="text-slate-400 text-sm flex items-center gap-2">
+                    <span class="w-2 h-2 bg-emerald-400 rounded-full"></span>
+                    Respuesta
+                  </dt>
+                  <dd class="text-base font-bold text-emerald-400">120ms</dd>
+                </div>
+                <div class="flex items-center justify-between">
+                  <dt class="text-slate-400 text-sm flex items-center gap-2">
+                    <span class="w-2 h-2 bg-sky-400 rounded-full"></span>
+                    Servidores
+                  </dt>
+                  <dd class="text-base font-bold text-sky-400">+250</dd>
+                </div>
+                <div class="flex items-center justify-between">
+                  <dt class="text-slate-400 text-sm flex items-center gap-2">
+                    <span class="w-2 h-2 bg-purple-400 rounded-full"></span>
+                    Satisfacción
+                  </dt>
+                  <dd class="text-base font-bold text-purple-400">96%</dd>
+                </div>
+              </dl>
+            </div>
+          </div>
+          
+          <!-- Video/Demo Placeholder -->
+          <div class="rounded-2xl border-2 border-dashed border-slate-600 bg-slate-800/30 p-8 text-center">
+            <div class="mx-auto h-20 w-20 rounded-2xl bg-gradient-to-br from-red-500 to-pink-600 flex items-center justify-center text-3xl text-white mb-4">▶️</div>
+            <p class="text-sm text-slate-400 font-semibold mb-2">Demo en Video</p>
+            <p class="text-xs text-slate-500">Mostrar bot funcionando</p>
+            <p class="text-xs text-slate-500">Comandos + Panel</p>
+          </div>
+        </section>
+
+        <section id="section-pricing" class="grid gap-10 lg:grid-cols-[2fr_1fr]">
+          <!-- Features Grid -->
+          <div class="rounded-2xl border border-slate-700 bg-slate-900/60 p-8 shadow-xl shadow-indigo-900/30">
+            <h2 class="text-2xl font-semibold mb-8 flex items-center gap-3">
+              <span class="text-3xl">✨</span>
+              Características clave
+            </h2>
+            
+            <div class="grid gap-6 md:grid-cols-2">
+              <div class="flex items-start gap-4 p-4 rounded-xl bg-slate-800/30 border border-slate-700/50">
+                <div class="rounded-xl bg-sky-500/10 p-3 text-sky-400 text-xl">💬</div>
+                <div>
+                  <h3 class="font-semibold text-slate-100 mb-1">Comandos Slash</h3>
+                  <p class="text-sm text-slate-400">Autocompletado y soporte multi-idioma</p>
+                </div>
+              </div>
+              
+              <div class="flex items-start gap-4 p-4 rounded-xl bg-slate-800/30 border border-slate-700/50">
+                <div class="rounded-xl bg-emerald-500/10 p-3 text-emerald-400 text-xl">👑</div>
+                <div>
+                  <h3 class="font-semibold text-slate-100 mb-1">Roles Premium</h3>
+                  <p class="text-sm text-slate-400">Límites y filtros personalizados</p>
+                </div>
+              </div>
+              
+              <div class="flex items-start gap-4 p-4 rounded-xl bg-slate-800/30 border border-slate-700/50">
+                <div class="rounded-xl bg-red-500/10 p-3 text-red-400 text-xl">🔍</div>
+                <div>
+                  <h3 class="font-semibold text-slate-100 mb-1">Logging Avanzado</h3>
+                  <p class="text-sm text-slate-400">Hooks para Axiom, Sentry, Datadog</p>
+                </div>
+              </div>
+              
+              <div class="flex items-start gap-4 p-4 rounded-xl bg-slate-800/30 border border-slate-700/50">
+                <div class="rounded-xl bg-purple-500/10 p-3 text-purple-400 text-xl">🔄</div>
+                <div>
+                  <h3 class="font-semibold text-slate-100 mb-1">Actualizaciones OTA</h3>
+                  <p class="text-sm text-slate-400">GitHub Actions incluido</p>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Feature Comparison Chart Placeholder -->
+            <div class="mt-8 rounded-xl border-2 border-dashed border-slate-600 bg-slate-800/30 p-6 text-center">
+              <div class="text-2xl mb-3">📊</div>
+              <p class="text-sm text-slate-400 font-semibold">Tabla Comparativa</p>
+              <p class="text-xs text-slate-500">vs otros bots musicales</p>
+            </div>
+          </div>
+          
+          <!-- Pricing Cards -->
+          <div class="space-y-6">
+            <div class="rounded-2xl border border-slate-700 bg-gradient-to-br from-sky-500/20 via-indigo-500/10 to-transparent p-6">
+              <div class="flex items-center gap-3 mb-6">
+                <span class="text-2xl">💎</span>
+                <h2 class="text-xl font-semibold">Planes disponibles</h2>
+              </div>
+              
+              <div class="space-y-4">
+                <div class="rounded-xl border border-slate-600/40 bg-slate-900/70 p-6 hover:bg-slate-900/90 transition-colors">
+                  <div class="flex items-center gap-3 mb-3">
+                    <div class="w-3 h-3 rounded-full bg-sky-400"></div>
+                    <p class="text-xs uppercase tracking-[0.3rem] text-slate-400">Starter</p>
+                  </div>
+                  <p class="text-3xl font-bold text-sky-300 mb-2">$20</p>
+                  <p class="text-sm text-slate-300">Instalación única + acceso a actualizaciones menores.</p>
+                </div>
+                
+                <div class="rounded-xl border border-emerald-500/40 bg-emerald-900/20 p-6 hover:bg-emerald-900/30 transition-colors relative">
+                  <div class="absolute -top-2 -right-2 bg-emerald-500 text-emerald-900 text-xs font-bold px-2 py-1 rounded-full">Popular</div>
+                  <div class="flex items-center gap-3 mb-3">
+                    <div class="w-3 h-3 rounded-full bg-emerald-400"></div>
+                    <p class="text-xs uppercase tracking-[0.3rem] text-slate-400">Managed</p>
+                  </div>
+                  <p class="text-3xl font-bold text-emerald-300 mb-2">$35 <span class="text-base font-normal text-slate-400">/ mes</span></p>
+                  <p class="text-sm text-slate-300">Hosting, monitoreo, playlists premium y soporte prioritario.</p>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Testimonial Placeholder -->
+            <div class="rounded-xl border-2 border-dashed border-slate-600 bg-slate-800/30 p-6 text-center">
+              <div class="text-2xl mb-3">💬</div>
+              <p class="text-sm text-slate-400 font-semibold">Testimonios</p>
+              <p class="text-xs text-slate-500">Reseñas de clientes</p>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer id="section-footer" class="mt-16 grid gap-8 lg:grid-cols-[1fr_300px] rounded-2xl border border-slate-700 bg-slate-900/60 p-10 shadow-lg shadow-slate-900/50">
+        <!-- Main CTA Content -->
+        <div class="text-center lg:text-left">
+          <h2 class="text-3xl font-bold text-sky-300 mb-4 flex items-center justify-center lg:justify-start gap-4">
+            <span class="text-4xl">🚀</span>
+            Listo para revolucionar tu servidor
+          </h2>
+          <p class="text-slate-300 mb-8 max-w-2xl">
+            Incluye documentación detallada, soporte a través de Discord y roadmap público para
+            garantizar la evolución del módulo.
+          </p>
+          
+          <!-- Support Features -->
+          <div class="grid md:grid-cols-3 gap-4 mb-8 text-sm">
+            <div class="flex items-center gap-3 text-slate-300">
+              <span class="w-8 h-8 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-400">📚</span>
+              <span>Docs completas</span>
+            </div>
+            <div class="flex items-center gap-3 text-slate-300">
+              <span class="w-8 h-8 rounded-xl bg-sky-500/10 flex items-center justify-center text-sky-400">💬</span>
+              <span>Soporte Discord</span>
+            </div>
+            <div class="flex items-center gap-3 text-slate-300">
+              <span class="w-8 h-8 rounded-xl bg-purple-500/10 flex items-center justify-center text-purple-400">🗺️</span>
+              <span>Roadmap público</span>
+            </div>
+          </div>
+          
+          <div class="flex flex-wrap justify-center lg:justify-start gap-4 text-sm font-semibold">
+            <a
+              href="https://builtbybit.com/"
+              class="rounded-full bg-gradient-to-r from-sky-500 to-indigo-500 px-8 py-4 text-white transition hover:from-sky-400 hover:to-indigo-400 shadow-lg hover:shadow-xl transform hover:scale-105"
+            >
+              🛒 Comprar en BuiltByBit
+            </a>
+            
+          </div>
+        </div>
+        
+        <!-- QR Code / Contact Placeholder -->
+        <div class="rounded-2xl border-2 border-dashed border-slate-600 bg-slate-800/30 p-8 text-center">
+          <div class="mx-auto h-24 w-24 rounded-2xl bg-gradient-to-br from-slate-700 to-slate-800 flex items-center justify-center text-2xl mb-4">
+            <div class="grid grid-cols-8 gap-px">
+              <div class="w-2 h-2 bg-slate-300 rounded-sm"></div>
+              <div class="w-2 h-2 bg-slate-600 rounded-sm"></div>
+              <div class="w-2 h-2 bg-slate-300 rounded-sm"></div>
+              <div class="w-2 h-2 bg-slate-600 rounded-sm"></div>
+              <div class="w-2 h-2 bg-slate-300 rounded-sm"></div>
+              <div class="w-2 h-2 bg-slate-600 rounded-sm"></div>
+              <div class="w-2 h-2 bg-slate-300 rounded-sm"></div>
+              <div class="w-2 h-2 bg-slate-600 rounded-sm"></div>
+            </div>
+          </div>
+          <p class="text-sm text-slate-400 font-semibold">QR Code</p>
+          <p class="text-xs text-slate-500">Enlace directo</p>
+          <p class="text-xs text-slate-500">a la tienda</p>
+        </div>
+      </footer>
+    </div>
+
+    <script>
+      // Función para preparar el elemento antes de capturar
+      function prepareElementForCapture(element) {
+        const clone = element.cloneNode(true);
+        clone.style.position = 'relative';
+        clone.style.left = '0';
+        clone.style.top = '0';
+        clone.style.transform = 'none';
+        clone.style.backgroundColor = '#0f172a';
+        clone.style.padding = '20px';
+        clone.style.margin = '0';
+        clone.style.width = 'auto';
+        clone.style.height = 'auto';
+        
+        
+        
+        document.body.appendChild(clone);
+        return clone;
+      }
+      
+      document.getElementById('exportBtn').addEventListener('click', async function() {
+        const btn = this;
+        const originalText = btn.innerHTML;
+        
+        // Cambiar estado del botón
+        btn.innerHTML = '<span class="animate-spin">⏳</span> Exportando...';
+        btn.disabled = true;
+        
+        const sections = [
+          { id: 'section-header', name: '01-Header' },
+          { id: 'section-features', name: '02-Features' },
+          { id: 'section-workflow', name: '03-Workflow' },
+          { id: 'section-pricing', name: '04-Pricing' },
+          { id: 'section-footer', name: '05-Footer' }
+        ];
+        
+        try {
+          for (let i = 0; i < sections.length; i++) {
+            const section = sections[i];
+            const element = document.getElementById(section.id);
+            
+            if (element) {
+              // Actualizar progreso
+              btn.innerHTML = `<span class="animate-pulse">📸</span> ${section.name} (${i + 1}/${sections.length})`;
+              
+              // Ocultar temporalmente el botón de exportación
+              const exportBtn = document.getElementById('exportBtn');
+              const originalDisplay = exportBtn.style.display;
+              exportBtn.style.display = 'none';
+              
+              try {
+                // Preparar elemento para captura
+                const clonedElement = prepareElementForCapture(element);
+                
+                // Esperar un momento para que se renderice
+                await new Promise(resolve => setTimeout(resolve, 200));
+                
+                // Capturar la sección
+                const canvas = await html2canvas(clonedElement, {
+                  backgroundColor: '#0f172a',
+                  scale: 2,
+                  useCORS: true,
+                  allowTaint: false,
+                  logging: false,
+                  width: clonedElement.offsetWidth,
+                  height: clonedElement.offsetHeight,
+                  scrollX: 0,
+                  scrollY: 0,
+                  onclone: function(clonedDoc) {
+                    // Asegurar que los estilos se mantengan en el clon
+                    const clonedBody = clonedDoc.body;
+                    clonedBody.style.background = `
+                      radial-gradient(circle at top left, rgba(59, 130, 246, 0.25), transparent 55%),
+                      radial-gradient(circle at bottom right, rgba(167, 139, 250, 0.2), transparent 45%),
+                      #0f172a
+                    `;
+                  }
+                });
+                
+                // Limpiar el elemento clonado
+                document.body.removeChild(clonedElement);
+                
+                // Crear y descargar la imagen
+                const link = document.createElement('a');
+                link.download = `Zumito-Music-Module-${section.name}.png`;
+                link.href = canvas.toDataURL('image/png', 1.0);
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+              } finally {
+                // Restaurar el botón de exportación
+                exportBtn.style.display = originalDisplay;
+              }
+              
+              // Pequeña pausa entre descargas
+              await new Promise(resolve => setTimeout(resolve, 800));
+            }
+          }
+          
+          // Éxito
+          btn.innerHTML = '<span>✅</span> ¡Completado!';
+          setTimeout(() => {
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+          }, 2000);
+          
+        } catch (error) {
+          console.error('Error al exportar:', error);
+          btn.innerHTML = '<span>❌</span> Error';
+          setTimeout(() => {
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+          }, 2000);
+        }
+      });
+      
+      // Función para exportar toda la página completa
+      document.getElementById('exportFullBtn').addEventListener('click', async function() {
+        const btn = this;
+        const originalText = btn.innerHTML;
+        
+        // Cambiar estado del botón
+        btn.innerHTML = '<span class="animate-spin">⏳</span> Capturando...';
+        btn.disabled = true;
+        
+        try {
+          // Ocultar todos los botones de exportación
+          const exportBtns = document.querySelector('.fixed.top-6.right-6');
+          const originalDisplay = exportBtns.style.display;
+          exportBtns.style.display = 'none';
+          
+          // Guardar el estilo original del contenedor principal
+          const mainContainer = document.querySelector('.mx-auto.max-w-6xl.px-6.py-16');
+          const originalMaxWidth = mainContainer.style.maxWidth;
+          const originalPadding = mainContainer.style.padding;
+          const originalMargin = mainContainer.style.margin;
+          
+          // Modificar temporalmente el contenedor para que use todo el ancho
+          mainContainer.style.maxWidth = 'none';
+          mainContainer.style.padding = '40px 20px';
+          mainContainer.style.margin = '0';
+          mainContainer.style.width = '100vw';
+          
+          // Esperar un momento para que se apliquen los cambios
+          await new Promise(resolve => setTimeout(resolve, 300));
+          
+          // Capturar toda la página con ancho completo
+          const canvas = await html2canvas(document.body, {
+            backgroundColor: '#0f172a',
+            scale: 1.5,
+            useCORS: true,
+            allowTaint: false,
+            logging: false,
+            width: window.innerWidth,
+            height: document.body.scrollHeight,
+            scrollX: 0,
+            scrollY: 0,
+            onclone: function(clonedDoc) {
+              // Asegurar que el fondo se mantenga en el clon
+              const clonedBody = clonedDoc.body;
+              clonedBody.style.background = `
+                radial-gradient(circle at top left, rgba(59, 130, 246, 0.25), transparent 55%),
+                radial-gradient(circle at bottom right, rgba(167, 139, 250, 0.2), transparent 45%),
+                #0f172a
+              `;
+              clonedBody.style.minHeight = '100vh';
+              
+              // Aplicar los mismos cambios al contenedor en el clon
+              const clonedContainer = clonedDoc.querySelector('.mx-auto.max-w-6xl.px-6.py-16');
+              if (clonedContainer) {
+                clonedContainer.style.maxWidth = 'none';
+                clonedContainer.style.padding = '40px 20px';
+                clonedContainer.style.margin = '0';
+                clonedContainer.style.width = '100vw';
+              }
+            }
+          });
+          
+          // Restaurar el estilo original del contenedor
+          mainContainer.style.maxWidth = originalMaxWidth;
+          mainContainer.style.padding = originalPadding;
+          mainContainer.style.margin = originalMargin;
+          mainContainer.style.width = '';
+          
+          // Restaurar los botones
+          exportBtns.style.display = originalDisplay;
+          
+          // Crear y descargar la imagen completa
+          const link = document.createElement('a');
+          link.download = 'Zumito-Music-Module-Completo.png';
+          link.href = canvas.toDataURL('image/png', 0.9);
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          
+          // Éxito
+          btn.innerHTML = '<span>✅</span> ¡Descargado!';
+          setTimeout(() => {
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+          }, 2000);
+          
+        } catch (error) {
+          console.error('Error al exportar página completa:', error);
+          btn.innerHTML = '<span>❌</span> Error';
+          setTimeout(() => {
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+          }, 2000);
+        }
+      });
+      
+      // Función para exportar secciones con fondo transparente
+      document.getElementById('exportTransparentBtn').addEventListener('click', async function() {
+        const btn = this;
+        const originalText = btn.innerHTML;
+        
+        // Cambiar estado del botón
+        btn.innerHTML = '<span class="animate-spin">⏳</span> Procesando...';
+        btn.disabled = true;
+        
+        const sections = [
+          { id: 'section-header', name: '01-Header' },
+          { id: 'section-features', name: '02-Features' },
+          { id: 'section-workflow', name: '03-Workflow' },
+          { id: 'section-pricing', name: '04-Pricing' },
+          { id: 'section-footer', name: '05-Footer' }
+        ];
+        
+        try {
+          for (let i = 0; i < sections.length; i++) {
+            const section = sections[i];
+            const element = document.getElementById(section.id);
+            
+            if (element) {
+              // Actualizar progreso
+              btn.innerHTML = `<span class="animate-pulse">🎭</span> ${section.name} (${i + 1}/${sections.length})`;
+              
+              // Ocultar temporalmente los botones de exportación
+              const exportBtns = document.querySelector('.fixed.top-6.right-6');
+              const originalDisplay = exportBtns.style.display;
+              exportBtns.style.display = 'none';
+              
+              try {
+                // Crear un wrapper temporal para el elemento
+                const wrapper = document.createElement('div');
+                wrapper.style.position = 'absolute';
+                wrapper.style.left = '-9999px';
+                wrapper.style.top = '0';
+                wrapper.style.background = 'transparent';
+                wrapper.style.padding = '0';
+                wrapper.style.margin = '0';
+                
+                // Clonar el elemento y añadirlo al wrapper
+                const clonedElement = element.cloneNode(true);
+                wrapper.appendChild(clonedElement);
+                document.body.appendChild(wrapper);
+                
+                // Esperar un momento para que se renderice
+                await new Promise(resolve => setTimeout(resolve, 200));
+                
+                // Capturar el wrapper con fondo transparente
+                const canvas = await html2canvas(wrapper, {
+                  backgroundColor: null, // Fondo transparente
+                  scale: 2,
+                  useCORS: true,
+                  allowTaint: false,
+                  logging: false,
+                  width: wrapper.scrollWidth,
+                  height: wrapper.scrollHeight,
+                  scrollX: 0,
+                  scrollY: 0
+                });
+                
+                // Limpiar el wrapper temporal
+                document.body.removeChild(wrapper);
+                
+                // Crear y descargar la imagen
+                const link = document.createElement('a');
+                link.download = `Zumito-Music-Module-${section.name}-Transparent.png`;
+                link.href = canvas.toDataURL('image/png', 1.0);
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+              } finally {
+                // Restaurar los botones de exportación
+                exportBtns.style.display = originalDisplay;
+              }
+              
+              // Pequeña pausa entre descargas
+              await new Promise(resolve => setTimeout(resolve, 600));
+            }
+          }
+          
+          // Éxito
+          btn.innerHTML = '<span>✅</span> ¡Listo!';
+          setTimeout(() => {
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+          }, 2000);
+          
+        } catch (error) {
+          console.error('Error al exportar transparente:', error);
+          btn.innerHTML = '<span>❌</span> Error';
+          setTimeout(() => {
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+          }, 2000);
+        }
+      });
+      
+      // Ocultar los botones al imprimir
+      window.addEventListener('beforeprint', () => {
+        document.querySelector('.fixed.top-6.right-6').style.display = 'none';
+      });
+      
+      window.addEventListener('afterprint', () => {
+        document.querySelector('.fixed.top-6.right-6').style.display = 'flex';
+      });
+    </script>
+  </body>
+</html>
