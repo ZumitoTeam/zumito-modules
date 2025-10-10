@@ -3,7 +3,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/ZumitoTeam/zumito-framework">
-    <img src="banner.png" alt="Logo" width="80" height="80"/>
+    <img src="banner.png" alt="Logo" width="100%">
   </a>
 
   <h3 align="center">Zumito Modules</h3>
