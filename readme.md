@@ -3,19 +3,33 @@
 <br />
 <div align="center">
   <a href="https://github.com/ZumitoTeam/zumito-framework">
-    <img src="https://media.discordapp.net/attachments/964297459327184906/1066399583896342649/d05ce5c0de25fd9afb4f5492f31f21fe.png" alt="Logo" width="80" height="80"/>
+    <img src="banner.png" alt="Logo" width="80" height="80"/>
   </a>
 
-  <h3 align="center">Zumito bundles</h3>
+  <h3 align="center">Zumito Modules</h3>
 
   <p align="center">
-    Collection of oficial bundles to extend zumito-framework functionalities
+    Collection of oficial modules to extend zumito-framework functionalities
     <br />
-    <a href="https://docs.zumito.dev/"><strong>Explore the docs »</strong></a>
+    <a href="https://docs.zumito.dev/"><strong>Explore the modules »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/ZumitoTeam/zumito-framework/issues">Report Bug</a>
+    <a href="https://github.com/ZumitoTeam/zumito-modules/issues">Report Bug</a>
     ·
-    <a href="https://github.com/ZumitoTeam/zumito-framework/issues">Request Feature</a>
+    <a href="https://github.com/ZumitoTeam/zumito-modules/issues">Request Feature</a>
   </p>
 </div>
+
+## Modules
+
+This repository contains the following official modules for the Zumito Framework:
+
+| Module |
+|--------|
+| **[Admin](admin/)**<br>Administrative panel and management tools, including dashboard, superadmin management, and authentication. |
+| **[Canvas Module](canvas-module/)**<br>Utility library for enhanced canvas rendering, image processing, and GIF generation for Discord bots. |
+| **[Distube Module](distube-module/)**<br>Music playback integration using DisTube, with commands, user panel, and multi-platform support. |
+| **[Logger](logger/)**<br>Logging services and utilities for tracking bot activities and errors. |
+| **[Reactions Module](reactions-module/)**<br>Reaction handling and commands for interactive Discord features. |
+| **[Stickmanfight](stickmanfight/)**<br>Interactive command for animated stick figure fights using user avatars. |
+| **[User Panel](userPanel/)**<br>User-facing dashboard for account management, server lists, and platform interactions. |
