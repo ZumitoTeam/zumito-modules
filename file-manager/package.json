@@ -10,10 +10,12 @@
   "scripts": {
     "build": "tsc -p tsconfig.json"
   },
-  "dependencies": {
+  "peerDependencies": {
     "zumito-framework": "^1.14.2"
   },
   "devDependencies": {
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "zumito-framework": "^1.14.2",
+    "@types/node": "^22.0.0"
   }
 }
