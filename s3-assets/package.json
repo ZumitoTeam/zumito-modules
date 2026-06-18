@@ -12,10 +12,13 @@
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.600.0",
-    "@zumito-team/file-manager": "^1.0.0",
+    "@zumito-team/file-manager": "^1.0.0"
+  },
+  "peerDependencies": {
     "zumito-framework": "^1.14.2"
   },
   "devDependencies": {
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "zumito-framework": "^1.14.2"
   }
 }
