@@ -11,10 +11,13 @@
     "build": "tsc -p tsconfig.json"
   },
   "dependencies": {
-    "@zumito-team/file-manager": "^1.0.0",
+    "@zumito-team/file-manager": "^0.2.0"
+  },
+  "peerDependencies": {
     "zumito-framework": "^1.14.2"
   },
   "devDependencies": {
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "zumito-framework": "^1.14.2"
   }
 }
