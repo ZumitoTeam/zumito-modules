@@ -1,0 +1,19 @@
+{
+  "name": "@zumito-team/file-manager",
+  "version": "1.0.0",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "author": "",
+  "license": "ISC",
+  "description": "Abstracción modular para gestores de archivos (FileManagers).",
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "zumito-framework": "^1.14.2"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}
