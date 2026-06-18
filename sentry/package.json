@@ -1,0 +1,23 @@
+{
+  "name": "@zumito-team/sentry",
+  "version": "1.0.0",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "author": "",
+  "license": "ISC",
+  "description": "Integración de Sentry para reporte centralizado de errores del framework Zumito.",
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@sentry/node": "^9.0.0"
+  },
+  "peerDependencies": {
+    "zumito-framework": "^1.14.2"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3",
+    "zumito-framework": "^1.14.2"
+  }
+}
