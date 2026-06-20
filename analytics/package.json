@@ -1,0 +1,21 @@
+{
+  "name": "@zumito-team/analytics-module",
+  "version": "1.0.0",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "description": "Server analytics module with configurable tracking and optional panel integration",
+  "type": "module",
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@zumito-team/admin-module": "^1.8.0",
+    "@zumito-team/user-panel-module": "^0.10.0",
+    "ejs": "^3.1.10",
+    "zumito-framework": "^1.22.2"
+  },
+  "devDependencies": {
+    "@types/ejs": "^3.1.5",
+    "typescript": "^5.9.3"
+  }
+}
