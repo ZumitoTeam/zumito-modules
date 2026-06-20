@@ -10,13 +10,19 @@
     <div class="card mb-6">
         <div class="text-center py-4">
             <div class="text-4xl font-bold text-discord-primary"><%= totalMessages %></div>
-            <div class="text-sm text-discord-foreground/60"><%= t('analytics.messages') %> (<%= daysBack %> <%= t('analytics.minutes') %>)</div>
+            <div class="text-sm text-discord-foreground/60"><%= t('analytics.messages') %> (<%= daysBack %> dias)</div>
         </div>
     </div>
-    <div class="card">
+    <div class="card mb-6">
         <h3 class="text-lg font-semibold mb-4 text-discord-foreground"><%= t('analytics.messagesPerDay') %></h3>
         <canvas id="chartMessages" width="700" height="300"></canvas>
     </div>
+    <% if (typeof channelMessages !== 'undefined' && channelMessages.length > 0) { %>
+    <div class="card">
+        <h3 class="text-lg font-semibold mb-4 text-discord-foreground">Mensajes por Canal</h3>
+        <canvas id="chartChannels" width="700" height="250"></canvas>
+    </div>
+    <% } %>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script>
@@ -28,4 +34,14 @@ new Chart(document.getElementById('chartMessages'), {
     },
     options: { responsive: true, plugins: { legend: { display: false } } }
 });
+<% if (typeof channelMessages !== 'undefined' && channelMessages.length > 0) { %>
+new Chart(document.getElementById('chartChannels'), {
+    type: 'bar',
+    data: {
+        labels: <%- JSON.stringify(channelMessages.map(v => v.channel_id)) %>,
+        datasets: [{ label: '<%= t("analytics.messages") %>', data: <%- JSON.stringify(channelMessages.map(v => v.message_count)) %>, backgroundColor: '#57f287', borderRadius: 4 }]
+    },
+    options: { responsive: true, plugins: { legend: { display: false } } }
+});
+<% } %>
 </script>

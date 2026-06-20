@@ -3,6 +3,7 @@ import { GuildDailyStats } from '../models/GuildDailyStats.js';
 import { CommandDailyStats } from '../models/CommandDailyStats.js';
 import { VoiceChannelDailyStats } from '../models/VoiceChannelDailyStats.js';
 import { GuildAnalyticsConfig } from '../models/GuildAnalyticsConfig.js';
+import { ChannelMessageStats } from '../models/ChannelMessageStats.js';
 import { AnalyticsModuleConfig } from '../config.js';
 
 interface VoiceSession {
@@ -26,6 +27,8 @@ export class AnalyticsCollector {
 
     private voiceSessions: Map<string, VoiceSession> = new Map();
     private dailyVoiceUsers: Map<string, Set<string>> = new Map();
+    private dailyMessageAuthors: Map<string, Set<string>> = new Map();
+    private dailyChannelMessageAuthors: Map<string, Set<string>> = new Map();
     private cleanupTimer: ReturnType<typeof setInterval> | null = null;
 
     constructor(
@@ -59,10 +62,50 @@ export class AnalyticsCollector {
         return defaults;
     }
 
-    async recordMessage(guildId: string): Promise<void> {
+    async recordMessage(guildId: string, channelId?: string, authorId?: string): Promise<void> {
         const config = await this.ensuredConfig(guildId);
         if (!config.enabled || !config.track_messages) return;
         await this.upsertGuildStats(guildId, { message_count: 1 });
+
+        // Track unique authors per day
+        if (authorId) {
+            const authorKey = `${guildId}_${today()}`;
+            if (!this.dailyMessageAuthors.has(authorKey)) {
+                this.dailyMessageAuthors.set(authorKey, new Set());
+            }
+            this.dailyMessageAuthors.get(authorKey)!.add(authorId);
+        }
+
+        // Track per-channel stats
+        if (channelId && config.track_per_channel_voice) {
+            const date = today();
+            const chanKey = `${guildId}_${channelId}_${date}`;
+            const repo = this.repo(ChannelMessageStats);
+            const existing = await repo.findOne({ id: chanKey });
+
+            if (authorId) {
+                if (!this.dailyChannelMessageAuthors.has(chanKey)) {
+                    this.dailyChannelMessageAuthors.set(chanKey, new Set());
+                }
+                this.dailyChannelMessageAuthors.get(chanKey)!.add(authorId);
+            }
+
+            if (existing) {
+                await repo.update({ id: chanKey }, {
+                    message_count: existing.message_count + 1,
+                    unique_authors: this.dailyChannelMessageAuthors.get(chanKey)?.size || 0,
+                });
+            } else {
+                await repo.insert({
+                    id: chanKey,
+                    guild_id: guildId,
+                    channel_id: channelId,
+                    date,
+                    message_count: 1,
+                    unique_authors: 0,
+                });
+            }
+        }
     }
 
     async recordMemberJoin(guildId: string): Promise<void> {
@@ -422,8 +465,14 @@ export class AnalyticsCollector {
                 error_count: data.errors,
                 avgExecutionTimeMs: data.usage_count > 0 ? Math.round(data.totalTime / data.usage_count) : 0,
             }))
-            .filter(c => c.total_execution_time_ms > 0)
-            .sort((a, b) => b.avgExecutionTimeMs - a.avgExecutionTimeMs)
+            .sort((a, b) => {
+                const aHasPerf = a.total_execution_time_ms > 0;
+                const bHasPerf = b.total_execution_time_ms > 0;
+                if (aHasPerf && bHasPerf) return b.avgExecutionTimeMs - a.avgExecutionTimeMs;
+                if (aHasPerf) return -1;
+                if (bHasPerf) return 1;
+                return b.usage_count - a.usage_count;
+            })
             .slice(0, limit);
     }
 
@@ -435,6 +484,16 @@ export class AnalyticsCollector {
             .where('date', 'gte', dateMin)
             .sort('date', 'asc')
             .exec() as Promise<VoiceChannelDailyStats[]>;
+    }
+
+    async getChannelMessageStats(guildId: string, daysBack: number): Promise<ChannelMessageStats[]> {
+        const repo = this.repo(ChannelMessageStats);
+        const dateMin = this.dateDaysAgo(daysBack);
+        return repo.query()
+            .where('guild_id', 'eq', guildId)
+            .where('date', 'gte', dateMin)
+            .sort('date', 'asc')
+            .exec() as Promise<ChannelMessageStats[]>;
     }
 
     // ── Config ───────────────────────────────────────────────────

@@ -48,9 +48,11 @@ export class UserPanelAnalyticsMessages extends Route {
             messagesPerDay.push({ date: s.date, count: s.message_count });
         }
 
+        const channelMessages = await this.collector.getChannelMessageStats(guildId, daysBack);
+
         const content = await ejs.renderFile(
             path.resolve(__dirname, '../views/user-analytics-messages.ejs'),
-            { totalMessages, messagesPerDay, t, daysBack },
+            { totalMessages, messagesPerDay, channelMessages, t, daysBack },
         );
 
         const view = ServiceContainer.getService(UserPanelViewService);

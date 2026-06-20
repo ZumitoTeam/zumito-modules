@@ -97,4 +97,5 @@ export { AnalyticsModuleConfig } from './config.js';
 export { GuildDailyStats } from './models/GuildDailyStats.js';
 export { CommandDailyStats } from './models/CommandDailyStats.js';
 export { VoiceChannelDailyStats } from './models/VoiceChannelDailyStats.js';
+export { ChannelMessageStats } from './models/ChannelMessageStats.js';
 export { GuildAnalyticsConfig } from './models/GuildAnalyticsConfig.js';

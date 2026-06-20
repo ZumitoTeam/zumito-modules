@@ -11,6 +11,6 @@ export class MessageCreate extends FrameworkEvent {
     async execute({ message }: any): Promise<void> {
         if (!message.guildId) return;
         if (message.author?.bot) return;
-        await this.collector.recordMessage(message.guildId);
+        await this.collector.recordMessage(message.guildId, message.channelId, message.author?.id);
     }
 }
