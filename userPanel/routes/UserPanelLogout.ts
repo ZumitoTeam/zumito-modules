@@ -1,11 +1,19 @@
-import { Route, RouteMethod } from "zumito-framework";
+import { Route, RouteMethod, ServiceContainer } from "zumito-framework";
+import { UserPanelAuthService } from "../services/UserPanelAuthService";
 
 export class UserPanelLogout extends Route {
+
     method = RouteMethod.get;
     path = '/panel/logout';
 
+    constructor(
+        private auth = ServiceContainer.getService(UserPanelAuthService)
+    ) {
+        super();
+    }
+
     async execute(req: any, res: any) {
-        res.clearCookie('panel_token', { path: '/' });
-        return res.redirect('/panel');
+        this.auth.clearAuthCookie(res);
+        res.redirect('/panel');
     }
 }

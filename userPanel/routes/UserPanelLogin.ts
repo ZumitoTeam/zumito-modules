@@ -1,15 +1,20 @@
-import { Route, RouteMethod } from "zumito-framework";
+import { Route, RouteMethod, ServiceContainer } from "zumito-framework";
+import { UserPanelAuthService } from "../services/UserPanelAuthService";
 
 export class UserPanelLogin extends Route {
+
     method = RouteMethod.get;
     path = '/panel/login';
 
+    constructor(
+        private auth = ServiceContainer.getService(UserPanelAuthService)
+    ) {
+        super();
+    }
+
     async execute(req: any, res: any) {
-        const clientId = process.env.DISCORD_CLIENT_ID;
-        if (!clientId) throw new Error('DISCORD_CLIENT_ID .env var not defined');
+        if (await this.auth.isLoginValid(req).then(r => r.isValid)) return res.redirect('/panel');
         const host = process.env.HOST ?? req.get('host');
-        const callbackUrl = `https://${host}/panel/login/callback`;
-        const url = `https://discord.com/oauth2/authorize?client_id=${clientId}&response_type=code&redirect_uri=${encodeURI(callbackUrl)}&scope=identify`;
-        res.redirect(url);
+        res.redirect(this.auth.getDiscordAuthUrl(host));
     }
 }
