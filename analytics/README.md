@@ -8,11 +8,11 @@
 npm install @zumito-team/analytics-module
 ```
 
-Add to your `zumito.config.ts`:
+Add to your `zumito.config.ts` (note the `/dist` suffix):
 
 ```ts
 {
-    path: path.join(__dirname, "node_modules", "@zumito-team", "analytics-module"),
+    path: path.join(__dirname, "node_modules", "@zumito-team", "analytics-module", "dist"),
 }
 ```
 
