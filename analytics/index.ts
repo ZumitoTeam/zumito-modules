@@ -1,8 +1,10 @@
+import 'reflect-metadata';
 import { Module, ServiceContainer } from 'zumito-framework';
 import { AnalyticsCollector } from './services/AnalyticsCollector.js';
 import { AnalyticsModuleConfig } from './config.js';
 
 export class AnalyticsModule extends Module {
+    static moduleName = 'analytics-module';
     static dependencies = [] as const;
     static optionalDependencies = ['admin-module', 'user-panel-module'] as const;
 

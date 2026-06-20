@@ -3,19 +3,30 @@
   "version": "1.0.0",
   "description": "Server analytics module with configurable tracking and optional panel integration",
   "type": "module",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "index.js",
+  "types": "index.d.ts",
   "files": [
-    "dist",
+    "commands",
+    "events",
+    "models",
+    "services",
+    "routes",
+    "translations",
+    "views",
+    "config.js",
+    "config.d.ts",
+    "index.js",
+    "index.d.ts",
     "README.md"
   ],
   "scripts": {
-    "build": "tsc -p tsconfig.json && cp -r translations dist/ && cp -r views dist/"
+    "build": "tsc -p tsconfig.json"
   },
   "dependencies": {
     "@zumito-team/admin-module": "^1.8.0",
     "@zumito-team/user-panel-module": "^0.10.0",
     "ejs": "^3.1.10",
+    "reflect-metadata": "^0.2.2",
     "zumito-framework": "^1.22.2"
   },
   "devDependencies": {
