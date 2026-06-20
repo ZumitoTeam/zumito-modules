@@ -1,5 +1,5 @@
 {
-  "name": "discord-auth",
+  "name": "@zumito-team/discord-auth",
   "version": "1.0.0",
   "main": "index.js",
   "types": "index.d.ts",

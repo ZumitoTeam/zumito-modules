@@ -16,7 +16,7 @@ Both [`admin`](../admin) and [`userPanel`](../userPanel) modules use this shared
 Create a service extending `DiscordAuthService`:
 
 ```ts
-import { DiscordAuthService } from 'discord-auth';
+import { DiscordAuthService } from '@zumito-team/discord-auth';
 
 export class MyAuthService extends DiscordAuthService {
     constructor() {
