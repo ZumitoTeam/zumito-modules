@@ -1,5 +1,4 @@
 import { Route, RouteMethod, ServiceContainer } from "zumito-framework";
-import { AdminLoginCallback } from "./AdminLoginCallback";
 import { AdminAuthService } from "../services/AdminAuthService";
 
 export class AdminLogin extends Route {
@@ -8,18 +7,14 @@ export class AdminLogin extends Route {
     path = '/admin/login';
 
     constructor(
-        private adminAuthService = ServiceContainer.getService(AdminAuthService)
+        private auth = ServiceContainer.getService(AdminAuthService)
     ) {
         super();
     }
 
-    async execute(req, res) {
-        if (await this.adminAuthService.isLoginValid(req).then(r => r.isValid)) return res.redirect('/admin');    
-        const clientId = process.env.DISCORD_CLIENT_ID;
-        if (!clientId) throw new Error('DISCORD_CLIET_ID .env var not defined');
-        const host = process.env.HOST ??req.get('host');
-        const callbackUrl = `https://${host}/admin/login/callback`;
-        res.redirect(`https://discord.com/oauth2/authorize?client_id=${clientId}&response_type=code&redirect_uri=${encodeURI(callbackUrl)}&scope=identify`);
+    async execute(req: any, res: any) {
+        if (await this.auth.isLoginValid(req).then(r => r.isValid)) return res.redirect('/admin');
+        const host = process.env.HOST ?? req.get('host');
+        res.redirect(this.auth.getDiscordAuthUrl(host));
     }
-
 }

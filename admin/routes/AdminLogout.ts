@@ -1,10 +1,10 @@
 import { Route, RouteMethod, ServiceContainer } from "zumito-framework";
 import { AdminAuthService } from "../services/AdminAuthService";
 
-export class AdminLoginCallback extends Route {
+export class AdminLogout extends Route {
 
     method = RouteMethod.get;
-    path = '/admin/login/callback';
+    path = '/admin/logout';
 
     constructor(
         private auth = ServiceContainer.getService(AdminAuthService)
@@ -13,6 +13,7 @@ export class AdminLoginCallback extends Route {
     }
 
     async execute(req: any, res: any) {
-        await this.auth.handleCallback(req, res);
+        this.auth.clearAuthCookie(res);
+        res.redirect('/admin');
     }
 }
