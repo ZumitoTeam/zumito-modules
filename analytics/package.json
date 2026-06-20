@@ -1,10 +1,14 @@
 {
   "name": "@zumito-team/analytics-module",
   "version": "1.0.0",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
   "description": "Server analytics module with configurable tracking and optional panel integration",
   "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "scripts": {
     "build": "tsc -p tsconfig.json && cp -r translations dist/ && cp -r views dist/"
   },
