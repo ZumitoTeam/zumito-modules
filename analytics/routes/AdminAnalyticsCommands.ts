@@ -6,15 +6,11 @@ import { AnalyticsCollector } from '../services/AnalyticsCollector.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-export class AdminAnalytics extends Route {
+export class AdminAnalyticsCommands extends Route {
     method = RouteMethod.get;
-    path = '/admin/analytics';
+    path = '/admin/analytics/commands';
 
-    constructor(
-        private collector: AnalyticsCollector = ServiceContainer.getService(AnalyticsCollector) as AnalyticsCollector,
-    ) {
-        super();
-    }
+    private collector = ServiceContainer.getService(AnalyticsCollector) as AnalyticsCollector;
 
     async execute(req: any, res: any): Promise<void> {
         const { AdminAuthService } = await import('@zumito-team/admin-module/services/AdminAuthService.js');
@@ -22,25 +18,23 @@ export class AdminAnalytics extends Route {
         if (!auth?.isValid) return res.redirect('/admin/login');
 
         const daysBack = parseInt(req.query.days as string) || 7;
-
-        const summary = await this.collector.getGlobalStatsSummary(daysBack);
-        const guildGrowth = await this.collector.getGuildGrowth(daysBack);
-        const messagesPerDay = await this.collector.getMessagesPerDay(daysBack);
+        const commandsPerDay = await this.collector.getCommandsPerDay(null, daysBack);
+        const topCommands = await this.collector.getTopCommands(null, daysBack, 15);
+        const slowestCommands = await this.collector.getSlowestCommands(null, daysBack, 10);
 
         const content = await ejs.renderFile(
-            path.resolve(__dirname, '../views/admin-analytics.ejs'),
-            { summary, guildGrowth, messagesPerDay },
+            path.resolve(__dirname, '../views/admin-analytics-commands.ejs'),
+            { commandsPerDay, topCommands, slowestCommands, daysBack },
         );
 
         const { AdminViewService } = await import('@zumito-team/admin-module/services/AdminViewService.js');
         const view = ServiceContainer.getService(AdminViewService);
         const html = await view.render({
-            title: 'Analiticas',
+            title: 'Analiticas - Comandos',
             content,
             reqPath: this.path,
             user: { name: 'Admin' },
         });
-
         res.send(html);
     }
 }

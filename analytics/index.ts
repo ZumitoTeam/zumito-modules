@@ -32,7 +32,10 @@ export class AnalyticsModule extends Module {
                         {
                             label: 'Analiticas',
                             items: [
-                                { label: 'Dashboard', url: '/admin/analytics' },
+                                { label: 'Resumen', url: '/admin/analytics' },
+                                { label: 'Mensajes', url: '/admin/analytics/messages' },
+                                { label: 'Comandos', url: '/admin/analytics/commands' },
+                                { label: 'Crecimiento', url: '/admin/analytics/growth' },
                             ],
                         },
                     ],
@@ -45,9 +48,35 @@ export class AnalyticsModule extends Module {
         try {
             const { UserPanelNavigationService } = await import('@zumito-team/user-panel-module/services/UserPanelNavigationService');
             const nav = ServiceContainer.getService(UserPanelNavigationService);
-            nav.registerSubItems('dashboard', 'general', [
-                { id: 'analytics', label: 'analytics.sidebarTitle', url: '/panel/:guildId/analytics' },
-            ]);
+            nav.registerItem({
+                id: 'analytics',
+                icon: `<svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-discord-white/60 group-hover:text-white" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="M7 16l4-8 4 5 4-3"/></svg>`,
+                label: 'analytics.sidebarTitle',
+                url: '/panel/:guildId/analytics',
+                order: 3,
+                category: 'general',
+                sidebar: {
+                    showDropdown: false,
+                    sections: [
+                        {
+                            id: 'analytics-overview',
+                            label: 'analytics.overview',
+                            items: [
+                                { label: 'analytics.overview', url: '/panel/:guildId/analytics' },
+                            ],
+                        },
+                        {
+                            id: 'analytics-details',
+                            label: 'analytics.detailedStats',
+                            items: [
+                                { label: 'analytics.messages', url: '/panel/:guildId/analytics/messages' },
+                                { label: 'analytics.voice', url: '/panel/:guildId/analytics/voice' },
+                                { label: 'analytics.commands', url: '/panel/:guildId/analytics/commands' },
+                            ],
+                        },
+                    ],
+                },
+            });
         } catch (e) {
             console.warn('[AnalyticsModule] User panel not available, skipping user panel integration');
         }

@@ -7,16 +7,12 @@ import { AnalyticsCollector } from '../services/AnalyticsCollector.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-export class UserPanelAnalytics extends Route {
+export class UserPanelAnalyticsCommands extends Route {
     method = RouteMethod.get;
-    path = '/panel/:guildId/analytics';
+    path = '/panel/:guildId/analytics/commands';
 
-    constructor(
-        private collector: AnalyticsCollector = ServiceContainer.getService(AnalyticsCollector) as AnalyticsCollector,
-        private client: Client = ServiceContainer.getService(Client) as Client,
-    ) {
-        super();
-    }
+    private collector = ServiceContainer.getService(AnalyticsCollector) as AnalyticsCollector;
+    private client = ServiceContainer.getService(Client) as Client;
 
     async execute(req: any, res: any): Promise<void> {
         const { UserPanelAuthService } = await import('@zumito-team/user-panel-module/services/UserPanelAuthService');
@@ -34,11 +30,8 @@ export class UserPanelAnalytics extends Route {
 
         let member = guild.members.cache.get(userId);
         if (!member) member = await guild.members.fetch(userId).catch(() => null);
-        if (!member || !(
-            member.permissions.has(PermissionFlagsBits.Administrator) ||
-            member.permissions.has(PermissionFlagsBits.ManageGuild) ||
-            guild.ownerId === userId
-        )) {
+        if (!member || !(member.permissions.has(PermissionFlagsBits.Administrator) ||
+            member.permissions.has(PermissionFlagsBits.ManageGuild) || guild.ownerId === userId)) {
             return res.status(403).send('No tienes permisos en este servidor');
         }
 
@@ -46,32 +39,15 @@ export class UserPanelAnalytics extends Route {
         const langMgr = ServiceContainer.getService(UserPanelLanguageManager);
         const { t } = langMgr.getLanguageVariables(req, res);
 
-        const stats = await this.collector.getGuildStats(guildId, daysBack);
+        const commandsPerDay = await this.collector.getCommandsPerDay(guildId, daysBack);
+        const topCommands = await this.collector.getTopCommands(guildId, daysBack, 15);
+        const slowestCommands = await this.collector.getSlowestCommands(guildId, daysBack, 10);
 
-        let guildSummary = {
-            totalMessages: 0, totalJoins: 0, totalLeaves: 0,
-            totalVoiceMinutes: 0, totalCommands: 0,
-        };
-        const joinsPerDay: { date: string; count: number }[] = [];
-        const leavesPerDay: { date: string; count: number }[] = [];
-        const messagesPerDay: { date: string; count: number }[] = [];
-        const voicePerDay: { date: string; count: number }[] = [];
+        const config = await this.collector.getConfig(guildId);
 
-        for (const s of stats) {
-            guildSummary.totalMessages += s.message_count;
-            guildSummary.totalJoins += s.join_count;
-            guildSummary.totalLeaves += s.leave_count;
-            guildSummary.totalVoiceMinutes += s.voice_minutes;
-            guildSummary.totalCommands += s.command_count;
-
-            messagesPerDay.push({ date: s.date, count: s.message_count });
-            joinsPerDay.push({ date: s.date, count: s.join_count });
-            leavesPerDay.push({ date: s.date, count: s.leave_count });
-            voicePerDay.push({ date: s.date, count: s.voice_minutes });
-        }
         const content = await ejs.renderFile(
-            path.resolve(__dirname, '../views/user-analytics.ejs'),
-            { guildSummary, messagesPerDay, joinsPerDay, leavesPerDay, t },
+            path.resolve(__dirname, '../views/user-analytics-commands.ejs'),
+            { commandsPerDay, topCommands, slowestCommands: config.track_command_performance ? slowestCommands : null, t, daysBack },
         );
 
         const view = ServiceContainer.getService(UserPanelViewService);

@@ -1,170 +1,76 @@
 <div class="p-4">
     <div class="flex items-center justify-between mb-6">
-        <h1 class="text-2xl font-bold text-discord-foreground"><%= t('analytics.botStats') %></h1>
-        <div class="flex gap-2">
-            <button data-days="7" class="date-btn btn-primary text-sm px-3 py-1 rounded"><%= t('analytics.last7days') %></button>
-            <button data-days="30" class="date-btn text-sm px-3 py-1 rounded bg-discord-dark-100 text-discord-foreground/70 hover:text-discord-foreground"><%= t('analytics.last30days') %></button>
-            <button data-days="90" class="date-btn text-sm px-3 py-1 rounded bg-discord-dark-100 text-discord-foreground/70 hover:text-discord-foreground"><%= t('analytics.last90days') %></button>
-        </div>
+        <h1 class="text-2xl font-bold text-discord-foreground">Analiticas</h1>
     </div>
 
-    <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
         <div class="card text-center">
-            <div class="text-2xl font-bold text-discord-foreground"><%= summary.totalGuilds %></div>
-            <div class="text-xs text-discord-foreground/60 mt-1"><%= t('analytics.totalGuilds') %></div>
+            <div class="text-2xl font-bold text-discord-primary"><%= summary.totalGuilds %></div>
+            <div class="text-xs text-discord-foreground/60 mt-1">Servidores</div>
         </div>
         <div class="card text-center">
-            <div class="text-2xl font-bold text-discord-foreground"><%= summary.totalMessages %></div>
-            <div class="text-xs text-discord-foreground/60 mt-1"><%= t('analytics.messages') %></div>
+            <div class="text-2xl font-bold text-discord-success"><%= summary.totalMessages %></div>
+            <div class="text-xs text-discord-foreground/60 mt-1">Mensajes</div>
         </div>
         <div class="card text-center">
-            <div class="text-2xl font-bold text-discord-foreground"><%= summary.totalCommands %></div>
-            <div class="text-xs text-discord-foreground/60 mt-1"><%= t('analytics.commands') %></div>
-        </div>
-        <div class="card text-center">
-            <div class="text-2xl font-bold text-discord-foreground"><%= summary.totalJoins %></div>
-            <div class="text-xs text-discord-foreground/60 mt-1"><%= t('analytics.joins') %></div>
+            <div class="text-2xl font-bold text-discord-warning"><%= summary.totalCommands %></div>
+            <div class="text-xs text-discord-foreground/60 mt-1">Comandos</div>
         </div>
         <div class="card text-center">
             <div class="text-2xl font-bold text-discord-foreground"><%= Math.round(summary.totalVoiceMinutes) %></div>
-            <div class="text-xs text-discord-foreground/60 mt-1"><%= t('analytics.voice') %> (min)</div>
+            <div class="text-xs text-discord-foreground/60 mt-1">Min. Voz</div>
         </div>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div class="card">
-            <h3 class="text-lg font-semibold mb-4 text-discord-foreground"><%= t('analytics.guildGrowth') %></h3>
-            <canvas id="chartGuildGrowth" width="400" height="200"></canvas>
+            <h3 class="text-lg font-semibold mb-4 text-discord-foreground">Crecimiento de Servidores</h3>
+            <canvas id="chartGrowth" width="400" height="200"></canvas>
         </div>
         <div class="card">
-            <h3 class="text-lg font-semibold mb-4 text-discord-foreground"><%= t('analytics.messagesPerDay') %></h3>
+            <h3 class="text-lg font-semibold mb-4 text-discord-foreground">Mensajes por Dia</h3>
             <canvas id="chartMessages" width="400" height="200"></canvas>
         </div>
-        <div class="card">
-            <h3 class="text-lg font-semibold mb-4 text-discord-foreground"><%= t('analytics.commandsPerDay') %></h3>
-            <canvas id="chartCommands" width="400" height="200"></canvas>
-        </div>
-        <div class="card">
-            <h3 class="text-lg font-semibold mb-4 text-discord-foreground"><%= t('analytics.topCommands') %></h3>
-            <canvas id="chartTopCommands" width="400" height="200"></canvas>
-        </div>
     </div>
-
-    <% if (typeof slowestCommands !== 'undefined' && slowestCommands.length > 0) { %>
-    <div class="card mb-6">
-        <h3 class="text-lg font-semibold mb-4 text-discord-foreground"><%= t('analytics.slowestCommands') %></h3>
-        <canvas id="chartSlowestCommands" width="600" height="200"></canvas>
-    </div>
-    <% } %>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <script>
 (function() {
-    const colors = {
-        primary: '#5865f2',
-        success: '#57f287',
-        warning: '#fee75c',
-        danger: '#ed4245',
-        foreground: '#ffffff',
-        foreground60: 'rgba(255,255,255,0.6)',
-        dark100: '#36393f',
-        dark200: '#2f3136',
-    };
+    Chart.defaults.color = 'rgba(255,255,255,0.6)';
+    Chart.defaults.borderColor = '#36393f';
 
-    Chart.defaults.color = colors.foreground60;
-    Chart.defaults.borderColor = colors.dark100;
-    Chart.defaults.plugins.legend.labels.color = colors.foreground60;
+    const guildGrowth = <%- JSON.stringify(guildGrowth) %>;
+    const messages = <%- JSON.stringify(messagesPerDay) %>;
 
-    const data = <%- JSON.stringify(chartData) %>;
+    new Chart(document.getElementById('chartGrowth'), {
+        type: 'line',
+        data: {
+            labels: guildGrowth.map(v => v.date),
+            datasets: [{
+                label: 'Servidores',
+                data: guildGrowth.map(v => v.guildCount),
+                borderColor: '#57f287',
+                backgroundColor: 'rgba(87,242,135,0.1)',
+                fill: true,
+                tension: 0.3,
+            }]
+        },
+        options: { responsive: true, plugins: { legend: { display: false } } }
+    });
 
-    function createLineChart(canvasId, label, values, keyX, keyY) {
-        new Chart(document.getElementById(canvasId), {
-            type: 'line',
-            data: {
-                labels: values.map(v => v[keyX]),
-                datasets: [{
-                    label: label,
-                    data: values.map(v => v[keyY]),
-                    borderColor: colors.primary,
-                    backgroundColor: 'rgba(88,101,242,0.1)',
-                    fill: true,
-                    tension: 0.3,
-                }]
-            },
-            options: { responsive: true, plugins: { legend: { display: false } } }
-        });
-    }
-
-    function createBarChart(canvasId, label, values, keyX, keyY) {
-        new Chart(document.getElementById(canvasId), {
-            type: 'bar',
-            data: {
-                labels: values.map(v => v[keyX]),
-                datasets: [{
-                    label: label,
-                    data: values.map(v => v[keyY]),
-                    backgroundColor: colors.primary,
-                    borderRadius: 4,
-                }]
-            },
-            options: { responsive: true, plugins: { legend: { display: false } } }
-        });
-    }
-
-    function createHorizontalBarChart(canvasId, label, values, keyX, keyY) {
-        new Chart(document.getElementById(canvasId), {
-            type: 'bar',
-            data: {
-                labels: values.map(v => v[keyX]),
-                datasets: [{
-                    label: label,
-                    data: values.map(v => v[keyY]),
-                    backgroundColor: values.map((_, i) => {
-                        const alpha = 1 - (i * 0.08);
-                        return `rgba(88,101,242,${Math.max(0.3, alpha)})`;
-                    }),
-                    borderRadius: 4,
-                }]
-            },
-            options: {
-                indexAxis: 'y',
-                responsive: true,
-                plugins: { legend: { display: false } }
-            }
-        });
-    }
-
-    createLineChart('chartGuildGrowth', '<%= t("analytics.guildGrowth") %>', data.guildGrowth, 'date', 'guildCount');
-    createBarChart('chartMessages', '<%= t("analytics.messagesPerDay") %>', data.messagesPerDay, 'date', 'count');
-    createBarChart('chartCommands', '<%= t("analytics.commandsPerDay") %>', data.commandsPerDay, 'date', 'count');
-    createHorizontalBarChart('chartTopCommands', '<%= t("analytics.topCommands") %>', data.topCommands, 'command_name', 'usage_count');
-
-    <% if (typeof slowestCommands !== 'undefined' && slowestCommands.length > 0) { %>
-    new Chart(document.getElementById('chartSlowestCommands'), {
+    new Chart(document.getElementById('chartMessages'), {
         type: 'bar',
         data: {
-            labels: data.slowestCommands.map(v => v.command_name),
+            labels: messages.map(v => v.date),
             datasets: [{
-                label: '<%= t("analytics.avgExecutionTime") %> (ms)',
-                data: data.slowestCommands.map(v => v.avgExecutionTimeMs),
-                backgroundColor: colors.warning,
+                label: 'Mensajes',
+                data: messages.map(v => v.count),
+                backgroundColor: '#5865f2',
                 borderRadius: 4,
             }]
         },
-        options: {
-            responsive: true,
-            plugins: { legend: { display: false } },
-            scales: { y: { title: { display: true, text: 'ms' } } }
-        }
-    });
-    <% } %>
-
-    document.querySelectorAll('.date-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const days = btn.dataset.days;
-            window.location.href = '/admin/analytics?days=' + days;
-        });
+        options: { responsive: true, plugins: { legend: { display: false } } }
     });
 })();
 </script>

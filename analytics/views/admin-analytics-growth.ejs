@@ -1,0 +1,46 @@
+<div class="p-4">
+    <div class="flex items-center justify-between mb-6">
+        <h1 class="text-2xl font-bold text-discord-foreground">Crecimiento</h1>
+        <div class="flex gap-2">
+            <a href="?days=30" class="text-sm px-3 py-1 rounded bg-discord-primary text-white">30d</a>
+            <a href="?days=60" class="text-sm px-3 py-1 rounded bg-discord-dark-100 text-discord-foreground/70 hover:text-discord-foreground">60d</a>
+            <a href="?days=90" class="text-sm px-3 py-1 rounded bg-discord-dark-100 text-discord-foreground/70 hover:text-discord-foreground">90d</a>
+        </div>
+    </div>
+    <div class="grid grid-cols-3 gap-4 mb-6">
+        <div class="card text-center">
+            <div class="text-3xl font-bold text-discord-foreground"><%= totalGuilds %></div>
+            <div class="text-xs text-discord-foreground/60 mt-1">Servidores Totales</div>
+        </div>
+        <div class="card text-center">
+            <div class="text-3xl font-bold text-discord-foreground"><%= summary.totalMessages %></div>
+            <div class="text-xs text-discord-foreground/60 mt-1">Mensajes</div>
+        </div>
+        <div class="card text-center">
+            <div class="text-3xl font-bold text-discord-foreground"><%= summary.totalCommands %></div>
+            <div class="text-xs text-discord-foreground/60 mt-1">Comandos</div>
+        </div>
+    </div>
+    <div class="card">
+        <h3 class="text-lg font-semibold mb-4 text-discord-foreground">Servidores Activos por Dia</h3>
+        <canvas id="chartGrowth" width="700" height="300"></canvas>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+new Chart(document.getElementById('chartGrowth'), {
+    type: 'line',
+    data: {
+        labels: <%- JSON.stringify(guildGrowth.map(v => v.date)) %>,
+        datasets: [{
+            label: 'Servidores',
+            data: <%- JSON.stringify(guildGrowth.map(v => v.guildCount)) %>,
+            borderColor: '#57f287',
+            backgroundColor: 'rgba(87,242,135,0.1)',
+            fill: true,
+            tension: 0.3,
+        }]
+    },
+    options: { responsive: true, plugins: { legend: { display: false } } }
+});
+</script>
