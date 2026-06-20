@@ -6,10 +6,21 @@ export class UserPanelLoginCallback extends Route {
     path = '/panel/login/callback';
 
     async execute(req: any, res: any) {
+        if (!process.env.DISCORD_CLIENT_ID) {
+            return res.status(500).send('DISCORD_CLIENT_ID is not configured.');
+        }
+        if (!process.env.DISCORD_CLIENT_SECRET) {
+            return res.status(500).send('DISCORD_CLIENT_SECRET is not configured.');
+        }
+        if (!process.env.SECRET_KEY) {
+            return res.status(500).send('SECRET_KEY is not configured.');
+        }
         const host = process.env.HOST ?? req.get('host');
+        const clientId = process.env.DISCORD_CLIENT_ID;
+        const clientSecret = process.env.DISCORD_CLIENT_SECRET;
         const params = {
-            client_id: process.env.DISCORD_CLIENT_ID ?? '',
-            client_secret: process.env.DISCORD_CLIENT_SECRET ?? '',
+            client_id: clientId,
+            client_secret: clientSecret,
             code: req.query.code ?? '',
             grant_type: 'authorization_code',
             redirect_uri: process.env.FRONTEND_URL ?? `https://${host}/panel/login/callback`,
@@ -37,6 +48,10 @@ export class UserPanelLoginCallback extends Route {
             }
         } catch (e) {
             console.error('Error fetching Discord user:', e);
+        }
+        if (!discordUserData) {
+            console.error('Failed to fetch Discord user data during login callback');
+            return res.status(500).send('Failed to authenticate with Discord. Please try again.');
         }
         const payload = {
             discordToken: oauthData.access_token,

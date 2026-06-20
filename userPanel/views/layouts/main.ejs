@@ -94,7 +94,7 @@
                     </span>
                 </div>
                 <div class="flex items-center space-x-4">
-                    <% if (tokenData) { %>
+                    <% if (tokenData && tokenData.discordUserData) { %>
                         <div class="flex items-center gap-3 bg-discord-dark-300 px-3 py-1.5 rounded-md hidden md:flex">
                             <div class="w-8 h-8 rounded-full bg-discord-primary flex items-center justify-center">
                                 <%= tokenData.discordUserData.username.charAt(0).toUpperCase() %>
