@@ -23,21 +23,17 @@ export class UserPanel extends Route {
     }
 
     async execute(req, res) {
-        const isLoginValid = await this.userPanelAuthService.isLoginValid(req).then(result => result.isValid);
-        if (!isLoginValid) {
+        const authData = await this.userPanelAuthService.isLoginValid(req).then(result => result);
+        if (!authData.isValid) {
             return res.redirect('/panel/login');
         }
-        // Aquí deberías validar que el usuario es admin de algún servidor
-        // y obtener la lista de servidores donde es admin
-        // Por ahora, solo mostramos el dashboard básico
         const client = this.client;
         const botUser = client.user;
         const botAvatar = botUser?.avatarURL?.() || botUser?.displayAvatarURL?.() || '';
         const botName = botUser?.username || 'Zumito';
         const botId = botUser?.id || '';
-        
-        // En producción, obtendríamos el userId de la sesión del usuario
-        const userId = req.session?.user?.id || '963953391061585972'; // ID de ejemplo
+
+        const userId = authData.data.discordUserData.id;
         
         // Filtrar solo los servidores donde el usuario es administrador
         const servers = [] as Array<{ id: string; name: string; icon: string; isOwner: boolean }>;
