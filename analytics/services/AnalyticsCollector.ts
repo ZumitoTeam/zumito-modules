@@ -33,7 +33,7 @@ export class AnalyticsCollector {
     ) {}
 
     private repo(name: any): any {
-        return this.repo(name);
+        return this.db.getRepository(name);
     }
 
     // ── Event recording ──────────────────────────────────────────
