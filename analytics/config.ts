@@ -7,6 +7,7 @@ export class AnalyticsModuleConfig {
     static defaultTrackCommands = true;
     static defaultTrackCommandPerformance = false;
     static defaultTrackPerChannelVoice = false;
+    static defaultTrackPerChannelMessages = false;
 
     static configure(opts: Partial<typeof AnalyticsModuleConfig>) {
         Object.assign(this, opts);

@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { Module, ServiceContainer } from 'zumito-framework';
+import { Module, ServiceContainer, createModuleEntry } from 'zumito-framework';
 import { AnalyticsCollector } from './services/AnalyticsCollector.js';
 import { AnalyticsModuleConfig } from './config.js';
 
@@ -11,6 +11,7 @@ export class AnalyticsModule extends Module {
     constructor(modulePath: string = import.meta.url) {
         super(modulePath);
         ServiceContainer.addService(AnalyticsCollector, [], true);
+        AnalyticsModuleConfig.configure(this.moduleConfig as Partial<typeof AnalyticsModuleConfig>);
     }
 
     async initialize(): Promise<void> {
@@ -90,6 +91,20 @@ export class AnalyticsModule extends Module {
         collector.clearVoiceSessions();
     }
 }
+
+export interface AnalyticsModuleEntryConfig {
+    defaultRetentionDays?: number;
+    cleanupIntervalHours?: number;
+    defaultTrackMessages?: boolean;
+    defaultTrackVoice?: boolean;
+    defaultTrackMembers?: boolean;
+    defaultTrackCommands?: boolean;
+    defaultTrackCommandPerformance?: boolean;
+    defaultTrackPerChannelVoice?: boolean;
+    defaultTrackPerChannelMessages?: boolean;
+}
+
+export const analyticsModule = createModuleEntry<AnalyticsModuleEntryConfig>(import.meta.url);
 
 export { AnalyticsCollector } from './services/AnalyticsCollector.js';
 export type { CommandExecutedPayload } from './services/AnalyticsCollector.js';

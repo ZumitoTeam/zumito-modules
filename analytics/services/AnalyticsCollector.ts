@@ -1,6 +1,7 @@
 import { DatabaseManager, ServiceContainer } from 'zumito-framework';
 import { GuildDailyStats } from '../models/GuildDailyStats.js';
 import { CommandDailyStats } from '../models/CommandDailyStats.js';
+import { CommandExecuted } from '../models/CommandExecuted.js';
 import { VoiceChannelDailyStats } from '../models/VoiceChannelDailyStats.js';
 import { GuildAnalyticsConfig } from '../models/GuildAnalyticsConfig.js';
 import { ChannelMessageStats } from '../models/ChannelMessageStats.js';
@@ -55,6 +56,7 @@ export class AnalyticsCollector {
             track_commands: AnalyticsModuleConfig.defaultTrackCommands,
             track_command_performance: AnalyticsModuleConfig.defaultTrackCommandPerformance,
             track_per_channel_voice: AnalyticsModuleConfig.defaultTrackPerChannelVoice,
+            track_per_channel_messages: AnalyticsModuleConfig.defaultTrackPerChannelMessages,
             retention_days: AnalyticsModuleConfig.defaultRetentionDays,
             public_stats_page: false,
         };
@@ -77,7 +79,7 @@ export class AnalyticsCollector {
         }
 
         // Track per-channel stats
-        if (channelId && config.track_per_channel_voice) {
+        if (channelId && config.track_per_channel_messages) {
             const date = today();
             const chanKey = `${guildId}_${channelId}_${date}`;
             const repo = this.repo(ChannelMessageStats);
@@ -195,30 +197,18 @@ export class AnalyticsCollector {
         await this.upsertGuildStats(payload.guildId, { command_count: 1 });
 
         const date = today();
-        const id = `${payload.guildId}_${payload.commandName}_${date}`;
-        const repo = this.repo(CommandDailyStats);
-        const existing = await repo.findOne({ id });
+        const id = `${payload.guildId}_${payload.commandName}_${Date.now()}`;
+        const repo = this.repo(CommandExecuted);
 
-        const executionTime = config.track_command_performance ? payload.executionTimeMs : 0;
-        const errorAdd = payload.success ? 0 : 1;
-
-        if (existing) {
-            await repo.update({ id }, {
-                usage_count: existing.usage_count + 1,
-                total_execution_time_ms: existing.total_execution_time_ms + executionTime,
-                error_count: existing.error_count + errorAdd,
-            });
-        } else {
-            await repo.insert({
-                id,
-                guild_id: payload.guildId,
-                command_name: payload.commandName,
-                date,
-                usage_count: 1,
-                total_execution_time_ms: executionTime,
-                error_count: errorAdd,
-            });
-        }
+        await repo.insert({
+            id,
+            guild_id: payload.guildId,
+            command_name: payload.commandName,
+            type: payload.type,
+            execution_time_ms: payload.executionTimeMs,
+            error: !payload.success,
+            executed_at: date,
+        });
     }
 
     async recordMemberCount(guildId: string, memberCount: number): Promise<void> {
@@ -357,122 +347,130 @@ export class AnalyticsCollector {
             .sort((a, b) => a.date.localeCompare(b.date));
     }
 
-    async getCommandsPerDay(guildId: string | null, daysBack: number): Promise<{ date: string; count: number }[]> {
-        const repo = this.repo(GuildDailyStats);
+    private async getCommandExecutedRows(guildId: string | null, daysBack: number): Promise<CommandExecuted[]> {
+        const repo = this.repo(CommandExecuted);
         const dateMin = this.dateDaysAgo(daysBack);
-        let rows: GuildDailyStats[];
+        let rows = await repo.query()
+            .where('executed_at', 'gte', dateMin)
+            .exec() as CommandExecuted[];
         if (guildId) {
-            rows = await repo.query()
-                .where('guild_id', 'eq', guildId)
-                .where('date', 'gte', dateMin)
-                .sort('date', 'asc')
-                .exec() as GuildDailyStats[];
-        } else {
-            rows = await repo.query()
-                .where('date', 'gte', dateMin)
-                .sort('date', 'asc')
-                .exec() as GuildDailyStats[];
+            rows = rows.filter(r => r.guild_id === guildId);
         }
+        return rows;
+    }
+
+    private async getCommandDailyStatsRows(guildId: string | null, daysBack: number): Promise<CommandDailyStats[]> {
+        const repo = this.repo(CommandDailyStats);
+        const dateMin = this.dateDaysAgo(daysBack);
+        let rows = await repo.query()
+            .where('date', 'gte', dateMin)
+            .exec() as CommandDailyStats[];
+        if (guildId) {
+            rows = rows.filter(r => r.guild_id === guildId);
+        }
+        return rows;
+    }
+
+    async getCommandsPerDay(guildId: string | null, daysBack: number): Promise<{ date: string; count: number }[]> {
+        const newRows = await this.getCommandExecutedRows(guildId, daysBack);
+        const oldRows = await this.getCommandDailyStatsRows(guildId, daysBack);
 
         const byDate = new Map<string, number>();
-        for (const row of rows) {
-            byDate.set(row.date, (byDate.get(row.date) || 0) + row.command_count);
+        for (const row of newRows) {
+            byDate.set(row.executed_at, (byDate.get(row.executed_at) || 0) + 1);
+        }
+        for (const row of oldRows) {
+            byDate.set(row.date, (byDate.get(row.date) || 0) + row.usage_count);
         }
         return Array.from(byDate.entries())
             .map(([date, count]) => ({ date, count }))
             .sort((a, b) => a.date.localeCompare(b.date));
     }
 
-    async getTopCommands(guildId: string | null, daysBack: number, limit: number = 10): Promise<CommandDailyStats[]> {
-        const repo = this.repo(CommandDailyStats);
-        const dateMin = this.dateDaysAgo(daysBack);
-        let rows: CommandDailyStats[];
-        if (guildId) {
-            rows = await repo.query()
-                .where('guild_id', 'eq', guildId)
-                .where('date', 'gte', dateMin)
-                .exec() as CommandDailyStats[];
-        } else {
-            rows = await repo.query()
-                .where('date', 'gte', dateMin)
-                .exec() as CommandDailyStats[];
-        }
+    async getCommandsPerDayByType(guildId: string | null, daysBack: number): Promise<{ date: string; slash: number; prefix: number }[]> {
+        const newRows = await this.getCommandExecutedRows(guildId, daysBack);
+        const oldRows = await this.getCommandDailyStatsRows(guildId, daysBack);
 
-        const aggregated = new Map<string, CommandDailyStats>();
-        for (const row of rows) {
-            const key = row.command_name;
-            if (aggregated.has(key)) {
-                const existing = aggregated.get(key)!;
-                existing.usage_count += row.usage_count;
-                existing.total_execution_time_ms += row.total_execution_time_ms;
-                existing.error_count += row.error_count;
-            } else {
-                aggregated.set(key, {
-                    id: key,
-                    guild_id: guildId || 'global',
-                    command_name: row.command_name,
-                    date: '',
-                    usage_count: row.usage_count,
-                    total_execution_time_ms: row.total_execution_time_ms,
-                    error_count: row.error_count,
-                });
-            }
+        const byDate = new Map<string, { slash: number; prefix: number }>();
+        for (const row of newRows) {
+            const entry = byDate.get(row.executed_at) || { slash: 0, prefix: 0 };
+            if (row.type === 'slash') entry.slash += 1;
+            else entry.prefix += 1;
+            byDate.set(row.executed_at, entry);
         }
-        return Array.from(aggregated.values())
+        for (const row of oldRows) {
+            const entry = byDate.get(row.date) || { slash: 0, prefix: 0 };
+            entry.prefix += row.usage_count;
+            byDate.set(row.date, entry);
+        }
+        return Array.from(byDate.entries())
+            .map(([date, counts]) => ({ date, ...counts }))
+            .sort((a, b) => a.date.localeCompare(b.date));
+    }
+
+    async getCommandsByType(guildId: string | null, daysBack: number): Promise<{ slash: number; prefix: number }> {
+        const newRows = await this.getCommandExecutedRows(guildId, daysBack);
+        const oldRows = await this.getCommandDailyStatsRows(guildId, daysBack);
+
+        let slash = 0;
+        let prefix = 0;
+        for (const row of newRows) {
+            if (row.type === 'slash') slash++;
+            else prefix++;
+        }
+        for (const row of oldRows) {
+            prefix += row.usage_count;
+        }
+        return { slash, prefix };
+    }
+
+    async getTopCommands(guildId: string | null, daysBack: number, limit: number = 10): Promise<{ command_name: string; usage_count: number }[]> {
+        const newRows = await this.getCommandExecutedRows(guildId, daysBack);
+        const oldRows = await this.getCommandDailyStatsRows(guildId, daysBack);
+
+        const aggregated = new Map<string, number>();
+        for (const row of newRows) {
+            aggregated.set(row.command_name, (aggregated.get(row.command_name) || 0) + 1);
+        }
+        for (const row of oldRows) {
+            aggregated.set(row.command_name, (aggregated.get(row.command_name) || 0) + row.usage_count);
+        }
+        return Array.from(aggregated.entries())
+            .map(([command_name, usage_count]) => ({ command_name, usage_count }))
             .sort((a, b) => b.usage_count - a.usage_count)
             .slice(0, limit);
     }
 
-    async getSlowestCommands(guildId: string | null, daysBack: number, limit: number = 10): Promise<(CommandDailyStats & { avgExecutionTimeMs: number })[]> {
-        const repo = this.repo(CommandDailyStats);
-        const dateMin = this.dateDaysAgo(daysBack);
-        let rows: CommandDailyStats[];
-        if (guildId) {
-            rows = await repo.query()
-                .where('guild_id', 'eq', guildId)
-                .where('date', 'gte', dateMin)
-                .exec() as CommandDailyStats[];
-        } else {
-            rows = await repo.query()
-                .where('date', 'gte', dateMin)
-                .exec() as CommandDailyStats[];
-        }
+    async getSlowestCommands(guildId: string | null, daysBack: number, limit: number = 10): Promise<{ command_name: string; avgExecutionTimeMs: number; total_executions: number }[]> {
+        const newRows = await this.getCommandExecutedRows(guildId, daysBack);
+        const oldRows = await this.getCommandDailyStatsRows(guildId, daysBack);
 
-        const aggregated = new Map<string, { usage_count: number; totalTime: number; errors: number }>();
-        for (const row of rows) {
-            const key = row.command_name;
-            if (aggregated.has(key)) {
-                const e = aggregated.get(key)!;
-                e.usage_count += row.usage_count;
-                e.totalTime += row.total_execution_time_ms;
-                e.errors += row.error_count;
+        const aggregated = new Map<string, { totalTime: number; count: number }>();
+        for (const row of newRows) {
+            const existing = aggregated.get(row.command_name);
+            if (existing) {
+                existing.totalTime += row.execution_time_ms;
+                existing.count += 1;
             } else {
-                aggregated.set(key, {
-                    usage_count: row.usage_count,
-                    totalTime: row.total_execution_time_ms,
-                    errors: row.error_count,
-                });
+                aggregated.set(row.command_name, { totalTime: row.execution_time_ms, count: 1 });
+            }
+        }
+        for (const row of oldRows) {
+            const existing = aggregated.get(row.command_name);
+            if (existing) {
+                existing.totalTime += row.total_execution_time_ms;
+                existing.count += row.usage_count;
+            } else {
+                aggregated.set(row.command_name, { totalTime: row.total_execution_time_ms, count: row.usage_count });
             }
         }
         return Array.from(aggregated.entries())
-            .map(([name, data]) => ({
-                id: name,
-                guild_id: guildId || 'global',
-                command_name: name,
-                date: '',
-                usage_count: data.usage_count,
-                total_execution_time_ms: data.totalTime,
-                error_count: data.errors,
-                avgExecutionTimeMs: data.usage_count > 0 ? Math.round(data.totalTime / data.usage_count) : 0,
+            .map(([command_name, data]) => ({
+                command_name,
+                avgExecutionTimeMs: data.count > 0 ? Math.round(data.totalTime / data.count) : 0,
+                total_executions: data.count,
             }))
-            .sort((a, b) => {
-                const aHasPerf = a.total_execution_time_ms > 0;
-                const bHasPerf = b.total_execution_time_ms > 0;
-                if (aHasPerf && bHasPerf) return b.avgExecutionTimeMs - a.avgExecutionTimeMs;
-                if (aHasPerf) return -1;
-                if (bHasPerf) return 1;
-                return b.usage_count - a.usage_count;
-            })
+            .sort((a, b) => b.avgExecutionTimeMs - a.avgExecutionTimeMs)
             .slice(0, limit);
     }
 
@@ -553,6 +551,16 @@ export class AnalyticsCollector {
 
             for (const cmd of oldCmds) {
                 await cmdRepo.delete({ id: cmd.id });
+            }
+
+            const cmdExRepo = this.repo(CommandExecuted);
+            const oldExecs = await cmdExRepo.query()
+                .where('guild_id', 'eq', guildId)
+                .where('executed_at', 'lt', cutoffDate)
+                .exec() as CommandExecuted[];
+
+            for (const exec of oldExecs) {
+                await cmdExRepo.delete({ id: exec.id });
             }
 
             const voiceRepo = this.repo(VoiceChannelDailyStats);

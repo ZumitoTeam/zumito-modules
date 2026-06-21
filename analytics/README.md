@@ -8,7 +8,34 @@
 npm install @zumito-team/analytics-module
 ```
 
-Add to your `zumito.config.ts` (note the `/dist` suffix):
+Add to your `zumito.config.ts`:
+
+### Modules (recommended)
+
+```ts
+import { defineConfig } from 'zumito-framework';
+import { analyticsModule } from '@zumito-team/analytics-module';
+
+export default defineConfig({
+    modules: [
+        analyticsModule({
+            defaultTrackCommandPerformance: true,
+        }),
+    ]
+});
+```
+
+Or with plain string:
+
+```ts
+import { defineConfig } from 'zumito-framework';
+
+export default defineConfig({
+    modules: ['@zumito-team/analytics-module']
+});
+```
+
+### Legacy bundles
 
 ```ts
 {

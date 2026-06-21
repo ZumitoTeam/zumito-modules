@@ -40,14 +40,13 @@ export class UserPanelAnalyticsCommands extends Route {
         const { t } = langMgr.getLanguageVariables(req, res);
 
         const commandsPerDay = await this.collector.getCommandsPerDay(guildId, daysBack);
+        const commandsPerDayByType = await this.collector.getCommandsPerDayByType(guildId, daysBack);
+        const commandsByType = await this.collector.getCommandsByType(guildId, daysBack);
         const topCommands = await this.collector.getTopCommands(guildId, daysBack, 15);
-        const slowestCommands = await this.collector.getSlowestCommands(guildId, daysBack, 10);
-
-        const config = await this.collector.getConfig(guildId);
 
         const content = await ejs.renderFile(
             path.resolve(__dirname, '../views/user-analytics-commands.ejs'),
-            { commandsPerDay, topCommands, slowestCommands: config.track_command_performance ? slowestCommands : null, t, daysBack },
+            { commandsPerDay, commandsPerDayByType, commandsByType, topCommands, t, daysBack },
         );
 
         const view = ServiceContainer.getService(UserPanelViewService);

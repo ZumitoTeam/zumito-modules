@@ -13,14 +13,19 @@
     "build": "tsc -p tsconfig.json && cp -r translations dist/ && cp -r views dist/"
   },
   "dependencies": {
+    "ejs": "^3.1.10",
+    "reflect-metadata": "^0.2.2"
+  },
+  "peerDependencies": {
     "@zumito-team/admin-module": "^1.8.0",
     "@zumito-team/user-panel-module": "^0.10.0",
-    "ejs": "^3.1.10",
-    "reflect-metadata": "^0.2.2",
     "zumito-framework": "^1.22.2"
   },
   "devDependencies": {
     "@types/ejs": "^3.1.5",
-    "typescript": "^5.9.3"
+    "@zumito-team/admin-module": "^1.8.0",
+    "@zumito-team/user-panel-module": "^0.10.0",
+    "typescript": "^5.9.3",
+    "zumito-framework": "^1.22.2"
   }
 }

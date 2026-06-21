@@ -19,12 +19,14 @@ export class AdminAnalyticsCommands extends Route {
 
         const daysBack = parseInt(req.query.days as string) || 7;
         const commandsPerDay = await this.collector.getCommandsPerDay(null, daysBack);
+        const commandsPerDayByType = await this.collector.getCommandsPerDayByType(null, daysBack);
+        const commandsByType = await this.collector.getCommandsByType(null, daysBack);
         const topCommands = await this.collector.getTopCommands(null, daysBack, 15);
         const slowestCommands = await this.collector.getSlowestCommands(null, daysBack, 10);
 
         const content = await ejs.renderFile(
             path.resolve(__dirname, '../views/admin-analytics-commands.ejs'),
-            { commandsPerDay, topCommands, slowestCommands, daysBack },
+            { commandsPerDay, commandsPerDayByType, commandsByType, topCommands, slowestCommands, daysBack },
         );
 
         const { AdminViewService } = await import('@zumito-team/admin-module/services/AdminViewService.js');

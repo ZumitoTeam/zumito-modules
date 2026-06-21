@@ -26,6 +26,9 @@ export class GuildAnalyticsConfig {
     @Field({ type: 'boolean', default: false })
     track_per_channel_voice!: boolean;
 
+    @Field({ type: 'boolean', default: false })
+    track_per_channel_messages!: boolean;
+
     @Field({ type: 'number' })
     retention_days!: number;
 
