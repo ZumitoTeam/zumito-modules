@@ -1,4 +1,4 @@
-import { Module, ServiceContainer, ZumitoFramework } from "zumito-framework";
+import { Module, ServiceContainer, createModuleEntry, type ZumitoFramework } from "zumito-framework";
 import { NavigationService } from "./services/NavigationService";
 import { AdminAuthService } from "./services/AdminAuthService";
 import { AdminViewService } from "./services/AdminViewService";
@@ -43,3 +43,24 @@ export class AdminModule extends Module {
     }
 
 }
+
+export interface AdminModuleColors {
+    primary?: string;
+    accent?: string;
+    success?: string;
+    warning?: string;
+    danger?: string;
+    foreground?: string;
+    dark?: {
+        100?: string;
+        200?: string;
+        300?: string;
+        400?: string;
+    };
+}
+
+export const adminModule = createModuleEntry<{
+    colors?: AdminModuleColors;
+    colorsFile?: string;
+    superadminIds?: string[];
+}>(import.meta.url);
