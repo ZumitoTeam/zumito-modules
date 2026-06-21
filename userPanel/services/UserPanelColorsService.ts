@@ -1,3 +1,4 @@
+import { ServiceContainer, ZumitoFramework, getModuleConfig } from "zumito-framework";
 import fs from 'fs';
 import path from 'path';
 
@@ -34,15 +35,30 @@ const defaultPalette: DiscordPalette = {
 };
 
 export class UserPanelColorsService {
-    private colors: DiscordPalette = defaultPalette;
+    private colors: DiscordPalette = { ...defaultPalette, dark: { ...defaultPalette.dark } };
 
-    constructor() {
-        const envPath = process.env.USER_PANEL_COLORS_FILE;
-        const envColors = process.env.USER_PANEL_COLORS;
-        if (envColors) {
-            this.loadFromString(envColors);
-        } else if (envPath) {
-            this.loadFromFile(envPath);
+    constructor(
+        private framework: ZumitoFramework = ServiceContainer.getService(ZumitoFramework),
+    ) {
+        const moduleConfig = getModuleConfig(framework, import.meta.url);
+        const inlineColors = moduleConfig?.colors;
+        const colorsFile = moduleConfig?.colorsFile;
+
+        if (inlineColors) {
+            this.setColors(inlineColors);
+        } else if (colorsFile) {
+            this.loadFromFile(colorsFile);
+        }
+
+        // Fallback to env vars for backwards compatibility
+        if (!inlineColors && !colorsFile) {
+            const envColors = process.env.USER_PANEL_COLORS;
+            const envPath = process.env.USER_PANEL_COLORS_FILE;
+            if (envColors) {
+                this.loadFromString(envColors);
+            } else if (envPath) {
+                this.loadFromFile(envPath);
+            }
         }
     }
 

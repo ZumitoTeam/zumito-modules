@@ -1,4 +1,4 @@
-import { Module, ServiceContainer, ZumitoFramework } from "zumito-framework";
+import { Module, ServiceContainer, createModuleEntry, type ZumitoFramework } from "zumito-framework";
 import { UserPanelNavigationService } from "./services/UserPanelNavigationService";
 import { UserPanelViewService } from "./services/UserPanelViewService";
 import { UserPanelAuthService } from "./services/UserPanelAuthService";
@@ -54,3 +54,23 @@ export class UserPanelModule extends Module {
         });
     }
 }
+
+export interface UserPanelModuleColors {
+    primary?: string;
+    accent?: string;
+    success?: string;
+    warning?: string;
+    danger?: string;
+    foreground?: string;
+    dark?: {
+        100?: string;
+        200?: string;
+        300?: string;
+        400?: string;
+    };
+}
+
+export const userPanelModule = createModuleEntry<{
+    colors?: UserPanelModuleColors;
+    colorsFile?: string;
+}>(import.meta.url);
